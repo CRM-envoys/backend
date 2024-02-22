@@ -1,5 +1,8 @@
 # backend CRM
-
+![python version](https://img.shields.io/badge/Python-3.11-green)
+![django version](https://img.shields.io/badge/Django-4.2-green)
+![djangorestframework version](https://img.shields.io/badge/DRF-3.14-green)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 ### Оглавление:
 - [Бэкенд CRM для Амбассадоров Яндекс Практикума](#бэкенд-CRM)
     - [О проекте:](#о-проекте)
