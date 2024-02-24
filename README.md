@@ -64,6 +64,7 @@ python -m venv venv
   ```
   python manage.py createsuperuser
   ```
+
 #### Запуск приложения на локальном сервере
 Перейдите в папку crm_backend
 ```sh
@@ -78,9 +79,20 @@ cd crm_backend
     ```sh
     python3 manage.py runserver
     ```
+
 #### Запуск тестов:
 ```sh
 python manage.py test
+```
+Для проверки процента покрытия тестами вам необходимо установить библиотеку coverage и выполнить команды:
+```sh
+pip install coverage
+```
+```sh
+coverage run -m unittest discover
+```
+```sh
+coverage report -m
 ```
 
 ### Установка pre-commit hooks
