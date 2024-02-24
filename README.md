@@ -63,6 +63,7 @@ python -m venv venv
   ```
   python manage.py createsuperuser
   ```
+
 #### Запуск приложения на локальном сервере
 Перейдите в папку crm_backend
 ```sh
@@ -77,6 +78,7 @@ cd crm_backend
     ```sh
     python3 manage.py runserver
     ```
+
 #### Запуск тестов:
 ```sh
 python manage.py test
