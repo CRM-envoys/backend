@@ -24,7 +24,7 @@ CRM-система для Амбассадоров Яндекс Практику
 **Клонирование реппозитория**
 
 ```sh
-git clone git@github.com:recruitment-process/recruitment-process-back.git
+git clone git@github.com:CRM-for-Yandex-ambassadors/backend.git
 ```
 
 Перейдите в папку с проектом recruitment-process-back, установите и запустите виртуальное окружение.
