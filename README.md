@@ -24,7 +24,7 @@ CRM-система для Амбассадоров Яндекс Практику
 **Клонирование реппозитория**
 
 ```sh
-git clone git@github.com:recruitment-process/recruitment-process-back.git
+git clone git@github.com:CRM-for-Yandex-ambassadors/backend.git
 ```
 
 Перейдите в папку с проектом recruitment-process-back, установите и запустите виртуальное окружение.
@@ -80,6 +80,16 @@ cd crm_backend
 #### Запуск тестов:
 ```sh
 python manage.py test
+```
+Для проверки процента покрытия тестами вам необходимо установить библиотеку coverage и выполнить команды:
+```sh
+pip install coverage
+```
+```sh
+coverage run -m unittest discover
+```
+```sh
+coverage report -m
 ```
 
 ### Установка pre-commit hooks
