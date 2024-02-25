@@ -6,7 +6,6 @@
 [![codecov](https://codecov.io/gh/CRM-for-Yandex-ambassadors/backend/graph/badge.svg?token=AWKLAD8MLB)](https://codecov.io/gh/CRM-for-Yandex-ambassadors/backend)
 ### Оглавление:
 - [backend CRM](#backend-crm)
-    - [Оглавление:](#оглавление)
     - [О проекте](#о-проекте)
   - [Запуск приложения](#запуск-приложения)
       - [Запуск приложения на локальном сервере](#запуск-приложения-на-локальном-сервере)
