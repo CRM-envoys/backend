@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "djoser",
     "users.apps.UsersConfig",
+    "ambassadors.apps.AmbassadorsConfig",
 ]
 
 MIDDLEWARE = [
