@@ -109,6 +109,3 @@ class GuideInfo(models.Model):
 
 
 """
-
-
-   

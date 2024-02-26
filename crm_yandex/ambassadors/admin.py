@@ -1,3 +1,12 @@
 from django.contrib import admin
 
-# Register your models here.
+from ambassadors.models import Course, Status
+
+@admin.register(Course)
+class CourseAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Status)
+class StatusAdmin(admin.ModelAdmin):
+    pass
