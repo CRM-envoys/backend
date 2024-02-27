@@ -2,8 +2,9 @@ from django.shortcuts import render, HttpResponse
 from djoser.views import UserViewSet
 from rest_framework.viewsets  import ModelViewSet
 
-from ambassadors.models import Course
-from api.serializers import CourseSerializer
+from ambassadors.models import Ambassador, Course, Status
+from api.serializers import AmbassadorSerializer, CourseSerializer, StatusSerializer
+
 
 def index(request):
     return HttpResponse("Привет Амбассадорам!")
@@ -16,5 +17,13 @@ class CustomUserViewSet(UserViewSet):
 class CourseViewSet(ModelViewSet):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
-    
 
+
+class StatusViewSet(ModelViewSet):
+    queryset = Status.objects.all()
+    serializer_class = StatusSerializer
+
+
+class AmbassadorViewSet(ModelViewSet):
+    queryset = Ambassador.objects.all()
+    serializer_class = AmbassadorSerializer

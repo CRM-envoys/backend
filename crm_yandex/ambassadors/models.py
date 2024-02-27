@@ -46,8 +46,12 @@ class Status(models.Model):
         return self.name
 
 
-class PersonalInfo(models.Model):
-    fio = models.CharField(max_length=100),
+class Ambassador(models.Model):
+    name1 = models.CharField(
+        max_length=Limits.DESIGNATION.value,
+        verbose_name='Название1',
+    )
+    fio = models.CharField(max_length=100, verbose_name='ФИО'),
     city = models.CharField(max_length=30),
     country = models.CharField(max_length=30),
     course = models.ManyToManyField(
@@ -68,44 +72,36 @@ class PersonalInfo(models.Model):
     )
 
     class Meta:
-        ordering = ['-registrationDate']
         verbose_name = 'Персональные данные'
         verbose_name_plural = 'Персональные данные'
 
-    def __str__(self):
-        return self.name
 
-
-
-
-
-
-
-"""
-class Сontacts(models.Model):
-    telegram = models.CharField(max_length=20),
-    phoneNumber = models.CharField(max_length=20),
-    email = models.EmailField(max_length=20),
+class Recipe(models.Model):
+    course = models.ManyToManyField(
+        Course,
+        related_name='courses2',
+        verbose_name='Ссылка на курс'
+    )
+    name = models.CharField(
+        max_length=Limits.DESIGNATION.value,
+        verbose_name='Название',
+    )
+    text = models.TextField(
+        verbose_name='Как приготовить'
+    )
+    cooking_time = models.PositiveSmallIntegerField(
+        verbose_name='Время приготовления',
+        default=0,
+    )
+    pub_date = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name='Дата публикации'
+    )
 
     class Meta:
-        ordering = ['telegram']
-        verbose_name = 'Контакты'
-        verbose_name_plural = 'Контакты'
+        ordering = ['-pub_date']
+        verbose_name = 'рецепт'
+        verbose_name_plural = 'Рецепты'
 
     def __str__(self):
         return self.name
-   
-
-class GuideInfo(models.Model):
-    guideOneStatus = models.BooleanField(default=False),
-    guideOnePlace = models.CharField(max_length=100),
-    guideOneUrl = models.CharField(max_lenght=100),
-    guideTwoStatus = models.BooleanField(default=False),
-    guideTwoFirstPlace = models.CharField(max_lenght=100),
-    guideTwoFirstUrl = models.CharField(max_lenght=100),
-    guideTwoSecondPlace = models.CharField(max_lenght=100),
-    guideTwoSecondUrl = models.CharField(max_lenght=100),
-    onboardingStatus = models.BooleanField(default=False),
-
-
-"""
