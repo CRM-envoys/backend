@@ -1,8 +1,9 @@
 from django.db import models
 
-from ambassadors.constants import (DECIMAL_MAX_DIGITS, DECIMAL_PLACES,
-                                   GOAL_MAX_LEN, NAME_MAX_LEN, SIZE_MAX_LEN,
-                                   STATUS_MAX_LEN)
+from ambassadors.constants import (AMBASSADOR_STATUS_CHOICES,
+                                   DECIMAL_MAX_DIGITS, DECIMAL_PLACES,
+                                   GOAL_MAX_LEN, GUIDE_STATUS_CHOICES,
+                                   NAME_MAX_LEN, SIZE_MAX_LEN, STATUS_MAX_LEN)
 from ambassadors.validators import POSTAL_CODE_VALIDATOR
 
 
@@ -61,7 +62,12 @@ class Goal(models.Model):
 
 
 class Address(models.Model):
-    # ambassador = models.
+    ambassador = models.ForeignKey(
+        Ambassador,
+        on_delete=models.CASCADE,
+        related_name="addresses",
+        verbose_name="Амбассадор"
+    )
     country = models.CharField(
         max_length=NAME_MAX_LEN,
         verbose_name="Страна",
@@ -143,6 +149,7 @@ class Course(models.Model):
 class AmbassadorStatus(models.Model):
     status = models.CharField(
         max_length=STATUS_MAX_LEN,
+        choices=AMBASSADOR_STATUS_CHOICES,
         verbose_name="Статус амбассадора"
     )
 
@@ -151,7 +158,7 @@ class AmbassadorStatus(models.Model):
         verbose_name_plural = "Статус амбассадора"
 
     def __str__(self):
-        return self.status
+        return self.get_status_display()
 
 
 class AmbassadorProfileStatus(models.Model):
@@ -159,6 +166,13 @@ class AmbassadorProfileStatus(models.Model):
         max_length=STATUS_MAX_LEN,
         verbose_name="Статус профиля амбассадора"
     )
+
+    class Meta:
+        verbose_name = "Статус профиля амбассадора"
+        verbose_name_plural = "Статус профиля амбассадора"
+
+    def __str__(self):
+        return self.status
 
 
 class Merch(models.Model):
@@ -262,8 +276,7 @@ class Content(models.Model):
 
 
 class OnboardingStatus(models.Model):
-    status = models.CharField(
-        max_length=STATUS_MAX_LEN,
+    status = models.BooleanField(
         verbose_name="Статус выполнения онбординга"
     )
 
@@ -278,6 +291,7 @@ class OnboardingStatus(models.Model):
 class GuideStatus(models.Model):
     status = models.CharField(
         max_length=STATUS_MAX_LEN,
+        choices=GUIDE_STATUS_CHOICES,
         verbose_name="Статус выполнения гайда"
     )
 
@@ -286,4 +300,4 @@ class GuideStatus(models.Model):
         verbose_name_plural = "Статус выполнения гайда"
 
     def __str__(self):
-        return self.status
+        return self.get_status_display()
