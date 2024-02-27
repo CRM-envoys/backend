@@ -127,6 +127,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+.dockerignore
 
 # Spyder project settings
 .spyderproject
@@ -161,4 +162,3 @@ cython_debug/
 .vscode/
 
 migrations/
-
