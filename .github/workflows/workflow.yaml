@@ -27,10 +27,10 @@ jobs:
         pip install flake8==6.1.0 flake8-isort==6.0.0 black==24.2.0
 
     - name: Check with flake8
-      run: python -m flake8 backend/crm_yandex/
+      run: python -m flake8 backend/
 
     - name: Check with black
-      run: black --check backend/crm_yandex/
+      run: black --check backend/
 
     - name: Run tests with coverage
       run: |
