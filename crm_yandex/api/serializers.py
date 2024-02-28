@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from ambassadors.models import Ambassador, Course, Status
+from backend.crm_yandex.ambassadors.models_old import Ambassador, Course, Status
 
 
 class CourseSerializer(serializers.ModelSerializer):

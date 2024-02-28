@@ -2,7 +2,7 @@ from django.shortcuts import render, HttpResponse
 from djoser.views import UserViewSet
 from rest_framework.viewsets  import ModelViewSet
 
-from ambassadors.models import Ambassador, Course, Status
+from backend.crm_yandex.ambassadors.models_old import Ambassador, Course, Status
 from api.serializers import AmbassadorSerializer, CourseSerializer, StatusSerializer
 
 
