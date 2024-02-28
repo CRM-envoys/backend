@@ -20,6 +20,7 @@ class Action(models.Model):
     class Meta:
         verbose_name = "Действие в рамках амбассадоров"
         verbose_name_plural = "Действия в рамках амбассадоров"
+        ordering = ['name']
 
     def __str__(self):
         return self.action
@@ -141,6 +142,7 @@ class Course(models.Model):
     class Meta:
         verbose_name = "Направление обучения в Практикуме"
         verbose_name_plural = "Направления обучения в Практикуме"
+        ordering = ['name']
 
     def __str__(self):
         return self.name
@@ -189,6 +191,7 @@ class Merch(models.Model):
     class Meta:
         verbose_name = "Мерч"
         verbose_name_plural = "Мерчи"
+        ordering = ['merch_type']
 
     def __str__(self):
         return f"{self.merch_type} - {self.cost}"
@@ -206,6 +209,7 @@ class MerchShipment(models.Model):
     class Meta:
         verbose_name = "Отправка мерча"
         verbose_name_plural = "Отправки мерча"
+        ordering = ['-date']
 
 
 class MerchOnShipping(models.Model):
@@ -243,6 +247,7 @@ class Venue(models.Model):
     class Meta:
         verbose_name = "Площадка"
         verbose_name_plural = "Площадки"
+        ordering = ['name']
 
     def __str__(self):
         return self.name
@@ -268,6 +273,7 @@ class Content(models.Model):
     class Meta:
         verbose_name = "Контент амбассадора"
         verbose_name_plural = "Контент амбассадора"
+        ordering = ['-date']
 
     def __str__(self):
         return (
