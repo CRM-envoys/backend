@@ -1,21 +1,86 @@
 from core.constants import Limits
 from django.db import models
 
-
-"""
-from ambassadors.constants import (AMBASSADOR_STATUS_CHOICES,
-                                   DECIMAL_MAX_DIGITS, DECIMAL_PLACES,
-                                   GOAL_MAX_LEN, GUIDE_STATUS_CHOICES,
-                                   NAME_MAX_LEN, SIZE_MAX_LEN, STATUS_MAX_LEN)
-"""
-
 from ambassadors.validators import POSTAL_CODE_VALIDATOR
+
+
+class Ambassador(models.Model):
+    """
+    Модель повторяет ЯФ + заметки КМ руками.
+    еще не все поля прописаны
+    """
+    fio = models.CharField(
+        max_length=Limits.NAME_MAX_LEN.value,
+        verbose_name='ФИО'
+    )
+    gender = models.CharField(
+        max_length=Limits.NAME_MAX_LEN.value,
+        verbose_name='Пол'
+    )
+    course = models.CharField(
+        max_length=Limits.NAME_MAX_LEN.value,
+        verbose_name='Курс'
+    )
+    country = models.CharField(
+        max_length=Limits.NAME_MAX_LEN.value,
+        verbose_name="Страна",
+    )
+    city = models.CharField(
+        max_length=Limits.NAME_MAX_LEN.value,
+        verbose_name="Город",
+    )
+    adress = models.CharField(
+        max_length=Limits.NAME_MAX_LEN.value,
+        verbose_name="Адрес",
+    )
+    postal_code = models.PositiveIntegerField(
+        verbose_name="Почтовый индекс",
+        validators=(POSTAL_CODE_VALIDATOR,)
+    )
+    email = models.CharField(
+        max_length=Limits.NAME_MAX_LEN.value,
+        verbose_name="Электронная почта",
+    )
+    phone_number = models.CharField(
+        max_length=Limits.NAME_MAX_LEN.value,
+        verbose_name="Номер телефона",
+    )
+    nickname_telegram = models.CharField(
+        max_length=Limits.NAME_MAX_LEN.value,
+        verbose_name="Ник в телеграм",
+    )
+    education = models.CharField(
+        max_length=Limits.NAME_MAX_LEN.value,
+        verbose_name="Образование",
+    )
+    place_work = models.CharField(
+        max_length=Limits.NAME_MAX_LEN.value,
+        verbose_name="Место работы",
+    )
+    goal = models.CharField(
+        max_length=Limits.NAME_MAX_LEN.value,
+        verbose_name="Цель обучения",
+    )
+    want_do_as_ambassador = models.CharField(
+        max_length=Limits.NAME_MAX_LEN.value,
+        verbose_name="Напраление работы амбассадора",
+    )
+    blog_ambassador = models.CharField(
+        max_length=Limits.NAME_MAX_LEN.value,
+        verbose_name="Цель обучения",
+    )
 
 
 class Action(models.Model):  # Вариант для интеграции ЯФ (Нам приходит готовая строка)
     action = models.CharField(  # Если нет, то через CHOICE вбивает КМ:
         max_length=Limits.NAME_MAX_LEN.value,  # Вести блог, Писать статьи (полный перечень в ЯФ)
         verbose_name="Действие"
+    )
+    slug = models.SlugField(
+        verbose_name='Ссылка на курс',
+        max_length=Limits.DESIGNATION.value,
+        null=True,
+        unique=True
     )
 
     class Meta:
@@ -41,7 +106,7 @@ class Goal(models.Model):  # Вариант для интеграции ЯФ (Н
         return self.goal
 
 
-class Ambassador(models.Model): # Если интег-ция с ЯФ, то все поля из ЯФ в модели - CharField
+class Ambassador_old(models.Model): # Если интег-ция с ЯФ, то все поля из ЯФ в модели - CharField
     action = models.ManyToManyField( # моделью м.б. только, то что подвязыает руками КM
         Action,  # вполне достаточно CHOICES
         related_name='ambassadors', # Резюмирую: модели action, goal излишни в проекте
@@ -53,6 +118,18 @@ class Ambassador(models.Model): # Если интег-ция с ЯФ, то вс�
         related_name='ambassadors',
         verbose_name="Цель в практикуме"
     )
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
