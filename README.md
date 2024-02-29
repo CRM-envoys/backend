@@ -3,7 +3,7 @@
 ![django version](https://img.shields.io/badge/Django-4.2-green)
 ![djangorestframework version](https://img.shields.io/badge/DRF-3.14-green)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-[![codecov](https://codecov.io/gh/CRM-for-Yandex-ambassadors/backend/graph/badge.svg?token=AWKLAD8MLB)](https://codecov.io/gh/CRM-for-Yandex-ambassadors/backend)
+![example workflow](https://github.com/CRM-for-Yandex-ambassadors/backend/actions/workflows/workflow.yaml/badge.svg)
 ### Оглавление:
 - [backend CRM](#backend-crm)
     - [О проекте](#о-проекте)
