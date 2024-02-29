@@ -29,18 +29,10 @@ jobs:
     - name: Check with flake8
       run: python -m flake8 crm_yandex/
 
-    - name: Run tests with coverage
+    - name: Run tests
       run: |
-        pip install coverage
         cd crm_yandex/
-        python manage.py test
-        coverage run -m unittest discover
-
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v4.0.1
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
-        slug: CRM-for-Yandex-ambassadors/backend
+        python manage.py test    
         
   build_and_push_to_docker_hub:
     name: Push Docker image to DockerHub
