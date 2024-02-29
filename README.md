@@ -3,13 +3,13 @@
 ![django version](https://img.shields.io/badge/Django-4.2-green)
 ![djangorestframework version](https://img.shields.io/badge/DRF-3.14-green)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![codecov](https://codecov.io/gh/CRM-for-Yandex-ambassadors/backend/graph/badge.svg?token=AWKLAD8MLB)](https://codecov.io/gh/CRM-for-Yandex-ambassadors/backend)
 ### Оглавление:
 - [backend CRM](#backend-crm)
-    - [Оглавление:](#оглавление)
-    - [О проекте:](#о-проекте)
+    - [О проекте](#о-проекте)
   - [Запуск приложения](#запуск-приложения)
       - [Запуск приложения на локальном сервере](#запуск-приложения-на-локальном-сервере)
-      - [Запуск тестов:](#запуск-тестов)
+      - [Запуск тестов](#запуск-тестов)
     - [Установка pre-commit hooks](#установка-pre-commit-hooks)
       - [Установка pre-commit](#установка-pre-commit)
       - [Установка hooks](#установка-hooks)
@@ -79,7 +79,7 @@ cd crm_backend
     python3 manage.py runserver
     ```
 
-#### Запуск тестов:
+#### Запуск тестов
 ```sh
 python manage.py test
 ```
