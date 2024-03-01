@@ -150,4 +150,4 @@ cz c
 - [Балахонова Марина](https://github.com/margoloko)
 - [Виноградов Сергей](https://github.com/yan-gabala)
 - [Раскатов Андрей](https://github.com/Diavolution)
-- [Смирнов Артем](https://github.com/BeardedDev1911)
+- [Артем](https://github.com/grinchomsk)
