@@ -28,11 +28,11 @@ jobs:
       run: python -m flake8 crm_yandex/       
         
     - name: Run migrations
+      env:
+        SECRET_KEY: ${{ secrets.SECRET_KEY }} 
       run: |
         cd crm_yandex/
-        python manage.py migrate
-      env:
-        SECRET_KEY: ${{ secrets.SECRET_KEY }}  
+        python manage.py migrate       
 
     - name: Run tests with coverage
       run: |
