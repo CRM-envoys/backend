@@ -1,7 +1,11 @@
 from core.constants import Limits
 from django.db import models
 
-from ambassadors.validators import POSTAL_CODE_VALIDATOR
+from ambassadors.validators import (POSTAL_CODE_VALIDATOR,
+                                    PHONE_NUMBER_VALIDATOR,
+                                    TELEGRAM_USERNAME_VALIDATOR)
+
+
 
 
 class Ambassador(models.Model):
@@ -42,12 +46,12 @@ class Ambassador(models.Model):
         verbose_name="Электронная почта",
     )
     phone_number = models.CharField(
-        max_length=Limits.NAME_MAX_LEN.value,
         verbose_name="Номер телефона",
+        validators=(TELEGRAM_USERNAME_VALIDATOR,)
     )
     nickname_telegram = models.CharField(
-        max_length=Limits.NAME_MAX_LEN.value,
         verbose_name="Ник в телеграм",
+        validators=(PHONE_NUMBER_VALIDATOR,)
     )
     education = models.CharField(
         max_length=Limits.NAME_MAX_LEN.value,
@@ -67,9 +71,37 @@ class Ambassador(models.Model):
     )
     blog_ambassador = models.CharField(
         max_length=Limits.NAME_MAX_LEN.value,
-        verbose_name="Цель обучения",
+        verbose_name="Блог амбассадора",
     )
+    size = models.CharField(
+        max_length=Limits.NAME_MAX_LEN.value,
+        verbose_name="Размер одежды",
+    )
+    foot_size = models.CharField(
+        max_length=Limits.NAME_MAX_LEN.value,
+        verbose_name="Размер обуви",
+    )
+    about_me = models.CharField(  ### последнее поле из ЯФ ###
+        verbose_name="О себе",
+    )
+    status = models.CharField(  ### далее поля задает КМ ###
+        choices=Limits.AMBASSADOR_STATUS_CHOICES.value,
+        verbose_name="Статус амбассадора"
+    )
+    # status_profile = models.BooleanField
 
+
+    class Meta:
+        verbose_name = "Амбассадор"
+        verbose_name_plural = "Амбассадоры"
+        ordering = ['-date'] # сортировка держит сверху самую свежую анкету из ЯФ
+
+
+
+
+
+
+"""
 
 class Action(models.Model):  # Вариант для интеграции ЯФ (Нам приходит готовая строка)
     action = models.CharField(  # Если нет, то через CHOICE вбивает КМ:
@@ -134,105 +166,7 @@ class Ambassador_old(models.Model): # Если интег-ция с ЯФ, то �
 
 
 
-class Address(models.Model): # модель не нужна
-    ambassador = models.ForeignKey(
-        Ambassador,
-        on_delete=models.CASCADE,
-        related_name="addresses",
-        verbose_name="Амбассадор"
-    )
-    country = models.CharField(
-        max_length=NAME_MAX_LEN,
-        verbose_name="Страна",
-    )
-    city = models.CharField(
-        max_length=NAME_MAX_LEN,
-        verbose_name="Город",
-    )
-    postal_code = models.PositiveIntegerField(
-        verbose_name="Почтовый индекс",
-        validators=(POSTAL_CODE_VALIDATOR,)
-    )
-    street = models.CharField(
-        max_length=NAME_MAX_LEN,
-        verbose_name="Улица",
-    )
-    house_number = models.PositiveSmallIntegerField(
-        verbose_name="Дом"
-    )
-    apartment_number = models.PositiveSmallIntegerField(
-        verbose_name="Квартира"
-    )
 
-    class Meta:
-        verbose_name = "Адрес амбассадора"
-        verbose_name_plural = "Адреса амбассадора"
-
-    def __str__(self):
-        return (
-            f"{self.country}, "
-            f"{self.city}, "
-            f"{self.street} "
-            f"{self.house_number}, "
-            f"кв. {self.apartment_number}"
-            )
-
-
-class ClothingSize(models.Model):
-    size = models.CharField(
-        max_length=SIZE_MAX_LEN,
-        verbose_name="Размер одежды"
-    )
-
-    class Meta:
-        verbose_name = "Размер одежды"
-        verbose_name_plural = "Размер одежды"
-
-    def __str__(self):
-        return self.size
-
-
-class FootSize(models.Model):
-    size = models.PositiveSmallIntegerField(
-        verbose_name="Размер ноги"
-    )
-
-    class Meta:
-        verbose_name = "Размер ноги"
-        verbose_name_plural = "Размер ноги"
-
-    def __str__(self):
-        return self.size
-
-
-class Course(models.Model):
-    name = models.CharField(
-        max_length=NAME_MAX_LEN,
-        verbose_name="Направление обучения в Практикуме"
-    )
-
-    class Meta:
-        verbose_name = "Направление обучения в Практикуме"
-        verbose_name_plural = "Направления обучения в Практикуме"
-        ordering = ['name']
-
-    def __str__(self):
-        return self.name
-
-
-class AmbassadorStatus(models.Model):
-    status = models.CharField(
-        max_length=STATUS_MAX_LEN,
-        choices=AMBASSADOR_STATUS_CHOICES,
-        verbose_name="Статус амбассадора"
-    )
-
-    class Meta:
-        verbose_name = "Статус амбассадора"
-        verbose_name_plural = "Статус амбассадора"
-
-    def __str__(self):
-        return self.get_status_display()
 
 
 class AmbassadorProfileStatus(models.Model):
@@ -379,3 +313,4 @@ class GuideStatus(models.Model):
 
     def __str__(self):
         return self.get_status_display()
+"""
