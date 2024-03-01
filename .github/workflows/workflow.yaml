@@ -27,7 +27,10 @@ jobs:
 
     - name: Check with flake8
       run: python -m flake8 crm_yandex/
-
+    - name: Set up environment variables
+      run: |
+        export SECRET_KEY=${{ secrets.SECRET_KEY }}
+        
     - name: Run migrations
       run: |
         cd crm_yandex/
