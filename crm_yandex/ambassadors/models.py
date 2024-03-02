@@ -1,73 +1,58 @@
 from django.db import models
 
 from ambassadors.constants import (AMBASSADOR_STATUS_CHOICES,
+                                   CLOTHING_SIZE_CHOICES,
+                                   CLOTHING_SIZE_MAX_LEN, COURSE_CHOICES,
                                    DECIMAL_MAX_DIGITS, DECIMAL_PLACES,
-                                   GOAL_MAX_LEN, GUIDE_STATUS_CHOICES,
-                                   NAME_MAX_LEN, SIZE_MAX_LEN, STATUS_MAX_LEN)
-from ambassadors.validators import POSTAL_CODE_VALIDATOR
+                                   GOAL_MAX_LEN, NAME_MAX_LEN,
+                                   PHONE_NUM_MAX_LEN, PREFERENCE_MAX_LEN,
+                                   PROMOCODE_MAX_LEN, SEX_CHOICES, SEX_MAX_LEN,
+                                   STATUS_MAX_LEN, TELEGRAM_MAX_LEN)
+from ambassadors.validators import (POSTAL_CODE_VALIDATOR,
+                                    TELEGRAM_USERNAME_VALIDATOR)
 
 
-class Ambassador(models.Model):
-    pass
-
-
-class Action(models.Model):
-    action = models.CharField(
+class Activity(models.Model):
+    name = models.CharField(
         max_length=NAME_MAX_LEN,
         verbose_name="Действие"
     )
 
     class Meta:
-        verbose_name = "Действие в рамках амбассадоров"
-        verbose_name_plural = "Действия в рамках амбассадоров"
-        ordering = ['name']
+        verbose_name = "Действие в рамках амбассадорства"
+        verbose_name_plural = "Действия в рамках амбассадорства"
+        ordering = ["name"]
 
     def __str__(self):
-        return self.action
+        return self.name
 
 
-class AmbassadorAction(models.Model):
-    ambassador = models.ForeignKey(
-        Ambassador,
-        on_delete=models.CASCADE,
-        related_name="ambassador_actions",
-        verbose_name="ID амбассадора"
-    )
-    action = models.ForeignKey(
-        Action,
-        on_delete=models.CASCADE,
-        related_name="ambassador_actions",
-        verbose_name="ID действия"
+class Preference(models.Model):
+    name = models.CharField(
+        max_length=PREFERENCE_MAX_LEN,
+        verbose_name="Предпочтение"
     )
 
     class Meta:
-        verbose_name = "Амбассадор-Действие"
-        verbose_name_plural = "Амбассадор-Действия"
-
-    def __str__(self):
-        return f"{self.ambassador} - {self.action}"
+        verbose_name = "Предпочтение в рамкха амбассадорства"
+        verbose_name_plural = "Предпочтения в рамкха амбассадорства"
+        ordering = ["name"]
 
 
-class Goal(models.Model):
-    goal = models.CharField(
-        max_length=GOAL_MAX_LEN,
-        verbose_name="Цель в практикуме"
+class Ambassador(models.Model):
+    fio = models.CharField(
+        max_length=NAME_MAX_LEN,
+        verbose_name="Фамилия Имя Отчество"
     )
-
-    class Meta:
-        verbose_name = "Цель в Практикуме"
-        verbose_name_plural = "Цели в Практикуме"
-
-    def __str__(self):
-        return self.goal
-
-
-class Address(models.Model):
-    ambassador = models.ForeignKey(
-        Ambassador,
-        on_delete=models.CASCADE,
-        related_name="addresses",
-        verbose_name="Амбассадор"
+    sex = models.CharField(
+        max_length=SEX_MAX_LEN,
+        choices=SEX_CHOICES,
+        verbose_name="Пол амбассадора"
+    )
+    course = models.CharField(
+        max_length=NAME_MAX_LEN,
+        choices=COURSE_CHOICES,
+        verbose_name="Программа обучения"
     )
     country = models.CharField(
         max_length=NAME_MAX_LEN,
@@ -77,104 +62,127 @@ class Address(models.Model):
         max_length=NAME_MAX_LEN,
         verbose_name="Город",
     )
+    address = models.CharField(
+        max_length=NAME_MAX_LEN,
+        verbose_name="Адрес проживания"
+    )
     postal_code = models.PositiveIntegerField(
         verbose_name="Почтовый индекс",
         validators=(POSTAL_CODE_VALIDATOR,)
     )
-    street = models.CharField(
+    email = models.EmailField(verbose_name="Электронная почта")
+    phone_number = models.CharField(
+        max_length=PHONE_NUM_MAX_LEN,
+        verbose_name="Номер телефона"
+    )
+    telegram = models.CharField(
+        max_length=TELEGRAM_MAX_LEN,
+        verbose_name="Телеграм",
+        validators=(TELEGRAM_USERNAME_VALIDATOR,)
+    )
+    education = models.CharField(
         max_length=NAME_MAX_LEN,
-        verbose_name="Улица",
+        verbose_name="Образование"
     )
-    house_number = models.PositiveSmallIntegerField(
-        verbose_name="Дом"
+    job = models.CharField(
+        max_length=NAME_MAX_LEN,
+        verbose_name="Текущая работа"
     )
-    apartment_number = models.PositiveSmallIntegerField(
-        verbose_name="Квартира"
+    goal = models.CharField(
+        max_length=GOAL_MAX_LEN,
+        verbose_name="Цель в Практикуме"
     )
-
-    class Meta:
-        verbose_name = "Адрес амбассадора"
-        verbose_name_plural = "Адреса амбассадора"
-
-    def __str__(self):
-        return (
-            f"{self.country}, "
-            f"{self.city}, "
-            f"{self.street} "
-            f"{self.house_number}, "
-            f"кв. {self.apartment_number}"
-            )
-
-
-class ClothingSize(models.Model):
-    size = models.CharField(
-        max_length=SIZE_MAX_LEN,
+    activities = models.ManyToManyField(
+        Activity,
+        through="AmbassadorActivity",
+        verbose_name="Амбассадорские действия",
+        related_name="ambassadors",
+        through_fields=("ambassador", "activity")
+    )
+    blog_link = models.URLField(verbose_name="Ссылка на блог")
+    clothing_size = models.CharField(
+        max_length=CLOTHING_SIZE_MAX_LEN,
+        choices=CLOTHING_SIZE_CHOICES,
         verbose_name="Размер одежды"
     )
-
-    class Meta:
-        verbose_name = "Размер одежды"
-        verbose_name_plural = "Размер одежды"
-
-    def __str__(self):
-        return self.size
-
-
-class FootSize(models.Model):
-    size = models.PositiveSmallIntegerField(
+    foot_size = models.PositiveSmallIntegerField(
         verbose_name="Размер ноги"
     )
-
-    class Meta:
-        verbose_name = "Размер ноги"
-        verbose_name_plural = "Размер ноги"
-
-    def __str__(self):
-        return self.size
-
-
-class Course(models.Model):
-    name = models.CharField(
-        max_length=NAME_MAX_LEN,
-        verbose_name="Направление обучения в Практикуме"
+    comment = models.TextField(
+        verbose_name="Комментарий"
     )
-
-    class Meta:
-        verbose_name = "Направление обучения в Практикуме"
-        verbose_name_plural = "Направления обучения в Практикуме"
-        ordering = ['name']
-
-    def __str__(self):
-        return self.name
-
-
-class AmbassadorStatus(models.Model):
+    registration_date = models.DateField(verbose_name="Дата регистрации")
+    promocode = models.CharField(
+        max_length=PROMOCODE_MAX_LEN,
+        verbose_name="Промокод"
+    )
     status = models.CharField(
         max_length=STATUS_MAX_LEN,
         choices=AMBASSADOR_STATUS_CHOICES,
         verbose_name="Статус амбассадора"
     )
+    preferences = models.ManyToManyField(
+        Preference,
+        through="AmbassadorPreference",
+        verbose_name="Предпочтения амбассадора",
+        related_name="ambassadors",
+        through_fields=("ambassador", "preference")
+    )
+    guide_one = models.BooleanField(verbose_name="Гайд 1")
+    guide_two = models.BooleanField(verbose_name="Гайд 2")
+    onboarding = models.BooleanField(verbose_name="Онбординг")
 
     class Meta:
-        verbose_name = "Статус амбассадора"
-        verbose_name_plural = "Статус амбассадора"
+        verbose_name = "Амбассадор"
+        verbose_name_plural = "Амбассадоры"
+        ordering = ["-registration_date"]
 
     def __str__(self):
-        return self.get_status_display()
+        return self.fio
 
 
-class AmbassadorProfileStatus(models.Model):
-    status = models.CharField(
-        max_length=STATUS_MAX_LEN,
-        verbose_name="Статус профиля амбассадора"
+class AmbassadorPreference(models.Model):
+    ambassador = models.ForeignKey(
+        Ambassador,
+        on_delete=models.CASCADE,
+        related_name="ambassador_preferences",
+        verbose_name="ID амбассадора"
+    )
+    preference = models.ForeignKey(
+        Preference,
+        on_delete=models.CASCADE,
+        related_name="ambassador_preferences",
+        verbose_name="ID предпочтения"
     )
 
     class Meta:
-        verbose_name = "Статус профиля амбассадора"
-        verbose_name_plural = "Статус профиля амбассадора"
+        verbose_name = "Амбассадор-Предпочтение"
+        verbose_name_plural = "Амбассадор-Предпочтения"
 
     def __str__(self):
-        return self.status
+        return f"{self.ambassador} - {self.preference}"
+
+
+class AmbassadorActivity(models.Model):
+    ambassador = models.ForeignKey(
+        Ambassador,
+        on_delete=models.CASCADE,
+        related_name="ambassador_activities",
+        verbose_name="ID амбассадора"
+    )
+    activity = models.ForeignKey(
+        Activity,
+        on_delete=models.CASCADE,
+        related_name="ambassador_activities",
+        verbose_name="ID действия"
+    )
+
+    class Meta:
+        verbose_name = "Амбассадор-Действие"
+        verbose_name_plural = "Амбассадор-Действия"
+
+    def __str__(self):
+        return f"{self.ambassador} - {self.activity}"
 
 
 class Merch(models.Model):
@@ -191,13 +199,17 @@ class Merch(models.Model):
     class Meta:
         verbose_name = "Мерч"
         verbose_name_plural = "Мерчи"
-        ordering = ['merch_type']
+        ordering = ["merch_type"]
 
     def __str__(self):
         return f"{self.merch_type} - {self.cost}"
 
 
 class MerchShipment(models.Model):
+    curator = models.CharField(
+        max_length=NAME_MAX_LEN,
+        verbose_name="Куратор"
+    )
     ambassador = models.ForeignKey(
         Ambassador,
         on_delete=models.CASCADE,
@@ -205,29 +217,35 @@ class MerchShipment(models.Model):
         verbose_name="ID амбассадора"
     )
     date = models.DateField()
+    merches = models.ManyToManyField(
+        Merch,
+        through="MerchOnShipping",
+        verbose_name="Амбассадорские действия",
+        related_name="merch_shipments",
+        through_fields=("shipping", "merch")
+    )
 
     class Meta:
         verbose_name = "Отправка мерча"
         verbose_name_plural = "Отправки мерча"
-        ordering = ['-date']
+        ordering = ["-date"]
+
+    def __str__(self):
+        return f"Ambassador ID: {self.ambassador.id} - {self.date}"
 
 
 class MerchOnShipping(models.Model):
     shipping = models.ForeignKey(
         MerchShipment,
         on_delete=models.CASCADE,
-        related_name="merch_on_shipping",
+        related_name="merches_on_shipping",
         verbose_name="ID отправки"
     )
     merch = models.ForeignKey(
         Merch,
         on_delete=models.CASCADE,
-        related_name="merch_on_shipping",
+        related_name="merches_on_shipping",
         verbose_name="Мерч"
-    )
-    size = models.CharField(
-        max_length=SIZE_MAX_LEN,
-        verbose_name="Размер"
     )
 
     class Meta:
@@ -235,7 +253,7 @@ class MerchOnShipping(models.Model):
         verbose_name_plural = "Мерч в отправке"
 
     def __str__(self):
-        return f"{self.merch} - {self.size}"
+        return f"{self.shipping} - {self.merch}"
 
 
 class Venue(models.Model):
@@ -247,7 +265,7 @@ class Venue(models.Model):
     class Meta:
         verbose_name = "Площадка"
         verbose_name_plural = "Площадки"
-        ordering = ['name']
+        ordering = ["name"]
 
     def __str__(self):
         return self.name
@@ -273,37 +291,9 @@ class Content(models.Model):
     class Meta:
         verbose_name = "Контент амбассадора"
         verbose_name_plural = "Контент амбассадора"
-        ordering = ['-date']
+        ordering = ["-date"]
 
     def __str__(self):
         return (
             f"Амбассадор: {self.ambassador} {self.link}"
         )
-
-
-class OnboardingStatus(models.Model):
-    status = models.BooleanField(
-        verbose_name="Статус выполнения онбординга"
-    )
-
-    class Meta:
-        verbose_name = "Статус выполнения онбординга"
-        verbose_name_plural = "Статус выполнения онбординга"
-
-    def __str__(self):
-        return self.status
-
-
-class GuideStatus(models.Model):
-    status = models.CharField(
-        max_length=STATUS_MAX_LEN,
-        choices=GUIDE_STATUS_CHOICES,
-        verbose_name="Статус выполнения гайда"
-    )
-
-    class Meta:
-        verbose_name = "Статус выполнения гайда"
-        verbose_name_plural = "Статус выполнения гайда"
-
-    def __str__(self):
-        return self.get_status_display()
