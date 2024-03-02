@@ -224,6 +224,9 @@ class MerchShipment(models.Model):
         related_name="merch_shipments",
         through_fields=("shipping", "merch")
     )
+    comment = models.TextField(
+        verbose_name="Комментарий"
+    )
 
     class Meta:
         verbose_name = "Отправка мерча"
