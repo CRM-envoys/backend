@@ -22,6 +22,7 @@ class Ambassador(models.Model):
     )
     course = models.CharField(
         max_length=Limits.NAME_MAX_LEN.value,
+        choices=COURSE_CHOICES,
         verbose_name='Курс'
     )
     country = models.CharField(
