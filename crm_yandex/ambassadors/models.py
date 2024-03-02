@@ -1,11 +1,10 @@
-from core.constants import Limits
+from core.constants import (Limits, AMBASSADOR_STATUS_CHOICES,
+                            CLOTHING_SIZE_CHOICES, COURSE_CHOICES,
+                            SEX_CHOICES, SEX_MAX_LEN)
+from core.validators import (POSTAL_CODE_VALIDATOR,
+                            PHONE_NUMBER_VALIDATOR,
+                            TELEGRAM_USERNAME_VALIDATOR)
 from django.db import models
-
-from ambassadors.validators import (POSTAL_CODE_VALIDATOR,
-                                    PHONE_NUMBER_VALIDATOR,
-                                    TELEGRAM_USERNAME_VALIDATOR)
-
-
 
 
 class Ambassador(models.Model):
@@ -46,10 +45,12 @@ class Ambassador(models.Model):
         verbose_name="Электронная почта",
     )
     phone_number = models.CharField(
+        max_length=Limits.NAME_MAX_LEN.value,
         verbose_name="Номер телефона",
         validators=(TELEGRAM_USERNAME_VALIDATOR,)
     )
     nickname_telegram = models.CharField(
+        max_length=Limits.NAME_MAX_LEN.value,
         verbose_name="Ник в телеграм",
         validators=(PHONE_NUMBER_VALIDATOR,)
     )
@@ -81,11 +82,12 @@ class Ambassador(models.Model):
         max_length=Limits.NAME_MAX_LEN.value,
         verbose_name="Размер обуви",
     )
-    about_me = models.CharField(  ### последнее поле из ЯФ ###
+    about_me = models.TextField(  ### последнее поле из ЯФ ###
         verbose_name="О себе",
     )
     status = models.CharField(  ### далее поля задает КМ ###
-        choices=Limits.AMBASSADOR_STATUS_CHOICES.value,
+        max_length=Limits.NAME_MAX_LEN.value,
+        choices=AMBASSADOR_STATUS_CHOICES,
         verbose_name="Статус амбассадора"
     )
     # status_profile = models.BooleanField
@@ -94,8 +96,7 @@ class Ambassador(models.Model):
     class Meta:
         verbose_name = "Амбассадор"
         verbose_name_plural = "Амбассадоры"
-        ordering = ['-date'] # сортировка держит сверху самую свежую анкету из ЯФ
-
+        ordering = ['fio'] # поменять на дату заполнения анкеты - сортировка держит сверху самую свежую анкету из ЯФ
 
 
 
