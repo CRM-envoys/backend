@@ -1,6 +1,6 @@
 from core.constants import (Limits, AMBASSADOR_STATUS_CHOICES,
                             CLOTHING_SIZE_CHOICES, COURSE_CHOICES,
-                            SEX_CHOICES, SEX_MAX_LEN)
+                            GENDER_CHOICES, GENDER_MAX_LEN)
 from core.validators import (POSTAL_CODE_VALIDATOR,
                             PHONE_NUMBER_VALIDATOR,
                             TELEGRAM_USERNAME_VALIDATOR)
@@ -18,6 +18,7 @@ class Ambassador(models.Model):
     )
     gender = models.CharField(
         max_length=Limits.NAME_MAX_LEN.value,
+        choices=GENDER_CHOICES,
         verbose_name='Пол'
     )
     course = models.CharField(

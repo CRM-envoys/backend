@@ -35,16 +35,11 @@ AMBASSADOR_STATUS_CHOICES = [
     ('left', 'Ушёл'),
     ('pending', 'Уточняется'),
 ]
-GUIDE_STATUS_CHOICES = [
-    ('not_completed', 'Не пройден'),
-    ('partially_completed', 'Пройдена 1 часть гайда'),
-    ('completed', 'Полностью пройден'),
-]
-SEX_CHOICES = [
+GENDER_CHOICES = [
     ('М', 'Мужчина'),
     ('Ж', 'Женщина')
 ]
-SEX_MAX_LEN: int = 1
+GENDER_MAX_LEN: int = 1
 COURSE_CHOICES = [
         ('analyst', 'Аналитик данных'),
         ('data_scientist', 'Специалист по Data Science'),
