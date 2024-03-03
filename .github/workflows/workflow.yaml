@@ -25,14 +25,7 @@ jobs:
           pip install -r requirements_mini.txt
 
       - name: Check with flake8
-        run: python -m flake8 crm_yandex/
-
-      - name: Run migrations
-        env:
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
-        run: |
-          cd crm_yandex
-          python manage.py migrate
+        run: python -m flake8 crm_yandex/      
       
   build_and_push_to_docker_hub:
     name: Push Docker image to DockerHub
