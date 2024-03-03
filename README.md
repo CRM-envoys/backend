@@ -1,15 +1,16 @@
 # backend CRM
+![example workflow](https://github.com/CRM-for-Yandex-ambassadors/backend/actions/workflows/workflow.yaml/badge.svg)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+
 ![python version](https://img.shields.io/badge/Python-3.11-green)
 ![django version](https://img.shields.io/badge/Django-4.2-green)
 ![djangorestframework version](https://img.shields.io/badge/DRF-3.14-green)
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 ### Оглавление:
 - [backend CRM](#backend-crm)
-    - [Оглавление:](#оглавление)
-    - [О проекте:](#о-проекте)
+    - [О проекте](#о-проекте)
   - [Запуск приложения](#запуск-приложения)
       - [Запуск приложения на локальном сервере](#запуск-приложения-на-локальном-сервере)
-      - [Запуск тестов:](#запуск-тестов)
+      - [Запуск тестов](#запуск-тестов)
     - [Установка pre-commit hooks](#установка-pre-commit-hooks)
       - [Установка pre-commit](#установка-pre-commit)
       - [Установка hooks](#установка-hooks)
@@ -24,7 +25,7 @@ CRM-система для Амбассадоров Яндекс Практику
 **Клонирование реппозитория**
 
 ```sh
-git clone git@github.com:recruitment-process/recruitment-process-back.git
+git clone git@github.com:CRM-for-Yandex-ambassadors/backend.git
 ```
 
 Перейдите в папку с проектом recruitment-process-back, установите и запустите виртуальное окружение.
@@ -63,6 +64,7 @@ python -m venv venv
   ```
   python manage.py createsuperuser
   ```
+
 #### Запуск приложения на локальном сервере
 Перейдите в папку crm_backend
 ```sh
@@ -77,9 +79,20 @@ cd crm_backend
     ```sh
     python3 manage.py runserver
     ```
-#### Запуск тестов:
+
+#### Запуск тестов
 ```sh
 python manage.py test
+```
+Для проверки процента покрытия тестами вам необходимо установить библиотеку coverage и выполнить команды:
+```sh
+pip install coverage
+```
+```sh
+coverage run -m unittest discover
+```
+```sh
+coverage report -m
 ```
 
 ### Установка pre-commit hooks
@@ -137,4 +150,4 @@ cz c
 - [Балахонова Марина](https://github.com/margoloko)
 - [Виноградов Сергей](https://github.com/yan-gabala)
 - [Раскатов Андрей](https://github.com/Diavolution)
-- [Смирнов Артем](https://github.com/BeardedDev1911)
+- [Климов Артем](https://github.com/grinchomsk)
