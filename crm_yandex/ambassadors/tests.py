@@ -1,12 +1,10 @@
 from django.core.exceptions import ValidationError
 from django.test import TestCase
 
-from ambassadors.models import (Activity, Ambassador, AmbassadorActivity,
-                                AmbassadorPreference, Content, Merch,
-                                MerchOnShipping, MerchShipment, Preference,
-                                Venue)
-from ambassadors.validators import (POSTAL_CODE_VALIDATOR,
-                                    TELEGRAM_USERNAME_VALIDATOR)
+from .models import (Activity, Ambassador, AmbassadorActivity,
+                     AmbassadorPreference, Content, Merch, MerchOnShipping,
+                     MerchShipment, Preference, Venue)
+from .validators import POSTAL_CODE_VALIDATOR, TELEGRAM_USERNAME_VALIDATOR
 
 
 class AmbassadorTests(TestCase):
