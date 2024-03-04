@@ -38,6 +38,9 @@ class Preference(models.Model):
         verbose_name_plural = "Предпочтения в рамкха амбассадорства"
         ordering = ["name"]
 
+    def __str__(self):
+        return self.name
+
 
 class Ambassador(models.Model):
     fio = models.CharField(
