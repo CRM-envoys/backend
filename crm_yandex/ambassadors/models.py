@@ -1,4 +1,5 @@
 from core.constants import (Limits, AMBASSADOR_STATUS_CHOICES,
+                            AMBASSADOR_PROFILE_CHOICES,
                             CLOTHING_SIZE_CHOICES, COURSE_CHOICES,
                             GENDER_CHOICES, GENDER_MAX_LEN)
 from core.validators import (POSTAL_CODE_VALIDATOR,
@@ -70,7 +71,7 @@ class Ambassador(models.Model):
     )
     want_do_as_ambassador = models.CharField(
         max_length=Limits.NAME_MAX_LEN.value,
-        verbose_name="Напраление работы амбассадора",
+        verbose_name="Направление работы амбассадора",
     )
     blog_ambassador = models.CharField(
         max_length=Limits.NAME_MAX_LEN.value,
@@ -92,7 +93,12 @@ class Ambassador(models.Model):
         choices=AMBASSADOR_STATUS_CHOICES,
         verbose_name="Статус амбассадора"
     )
-    # status_profile = models.BooleanField
+    # status_profile = models.CharField(  # Поменять на BooleanField ???
+        # max_length=Limits.NAME_MAX_LEN.value,
+        # choices=AMBASSADOR_PROFILE_CHOICES,
+        # verbose_name="Статус профиля амбассадора"
+    # )
+    
 
 
     class Meta:

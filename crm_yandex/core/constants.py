@@ -29,11 +29,9 @@ GUIDE_STATUS_CHOICES = [
     ('partially_completed', 'Пройдена 1 часть гайда'),
     ('completed', 'Полностью пройден'),
 ]
-AMBASSADOR_STATUS_CHOICES = [
-    ('active', 'Активный'),
-    ('paused', 'На паузе'),
-    ('left', 'Ушёл'),
-    ('pending', 'Уточняется'),
+AMBASSADOR_PROFILE_CHOICES = [
+    ('process', 'Обработан'),
+    ('not_process', 'Не обработан'),
 ]
 GENDER_CHOICES = [
     ('М', 'Мужчина'),
