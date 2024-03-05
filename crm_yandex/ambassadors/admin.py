@@ -1,9 +1,8 @@
 from django.contrib import admin
 
-from ambassadors.models import (Activity, Ambassador, AmbassadorActivity,
-                                AmbassadorPreference, Content, MerchOnShipping,
-                                MerchShipment, Preference, Venue)
-
+from .models import (Activity, Ambassador, AmbassadorActivity,
+                     AmbassadorPreference, Content, MerchOnShipping,
+                     MerchShipment, Preference, Venue)
 
 admin.site.register(Activity)
 admin.site.register(Ambassador)

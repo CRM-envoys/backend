@@ -1,12 +1,11 @@
 from django.core.exceptions import ValidationError
 from django.test import TestCase
+from django.utils import timezone
 
-from ambassadors.models import (Activity, Ambassador, AmbassadorActivity,
-                                AmbassadorPreference, Content, Merch,
-                                MerchOnShipping, MerchShipment, Preference,
-                                Venue)
-from ambassadors.validators import (POSTAL_CODE_VALIDATOR,
-                                    TELEGRAM_USERNAME_VALIDATOR)
+from .models import (Activity, Ambassador, AmbassadorActivity,
+                     AmbassadorPreference, Content, Merch, MerchOnShipping,
+                     MerchShipment, Preference, Venue)
+from .validators import POSTAL_CODE_VALIDATOR, TELEGRAM_USERNAME_VALIDATOR
 
 
 class AmbassadorTests(TestCase):
@@ -32,7 +31,6 @@ class AmbassadorTests(TestCase):
             clothing_size="xs",
             foot_size="40",
             comment="test_comment",
-            registration_date="2024-01-01",
             promocode="test_promo",
             status="active",
             guide_one=False,
@@ -46,8 +44,13 @@ class AmbassadorTests(TestCase):
         self.merch_shipment = MerchShipment.objects.create(
             curator="Test Test",
             ambassador=self.ambassador,
-            date="2024-01-01",
-            comment="test_comment"
+            comment="test_comment",
+            status=False,
+            country="test_country",
+            city="test_city",
+            address="test_address",
+            postal_code="123456",
+            phone_number="+75555555555"
         )
         self.venue = Venue.objects.create(name="test_venue")
         self.content = Content.objects.create(
@@ -67,7 +70,9 @@ class AmbassadorTests(TestCase):
         )
         self.merch_on_shipping = MerchOnShipping.objects.create(
             shipping=self.merch_shipment,
-            merch=self.merch
+            merch=self.merch,
+            amount=1,
+            size="M"
         )
 
     def test_activity_listing(self):
@@ -94,7 +99,9 @@ class AmbassadorTests(TestCase):
         self.assertEqual(self.ambassador.clothing_size, "xs")
         self.assertEqual(self.ambassador.foot_size, "40")
         self.assertEqual(self.ambassador.comment, "test_comment")
-        self.assertEqual(self.ambassador.registration_date, "2024-01-01")
+        self.assertEqual(
+            self.ambassador.registration_date, timezone.now().date()
+        )
         self.assertEqual(self.ambassador.promocode, "test_promo")
         self.assertEqual(self.ambassador.status, "active")
         self.assertEqual(self.ambassador.guide_one, False)
@@ -111,8 +118,14 @@ class AmbassadorTests(TestCase):
             self.merch_shipment.ambassador.fio,
             "Тест Тестов Тестович"
         )
-        self.assertEqual(self.merch_shipment.date, "2024-01-01")
+        self.assertEqual(self.merch_shipment.date, timezone.now().date())
         self.assertEqual(self.merch_shipment.comment, "test_comment")
+        self.assertEqual(self.merch_shipment.status, False)
+        self.assertEqual(self.merch_shipment.country, "test_country")
+        self.assertEqual(self.merch_shipment.city, "test_city")
+        self.assertEqual(self.merch_shipment.address, "test_address")
+        self.assertEqual(self.merch_shipment.postal_code, "123456")
+        self.assertEqual(self.ambassador.phone_number, "+75555555555")
 
     def test_models_have_correct_object_names(self):
         model_str = {
