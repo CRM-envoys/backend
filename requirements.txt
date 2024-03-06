@@ -33,7 +33,7 @@ packaging==23.2
 pathspec==0.12.1
 platformdirs==4.2.0
 pre-commit==3.6.2
-psycopg2-binary==2.9.3
+psycopg2-binary
 pycparser==2.21
 python-dotenv==1.0.1
 python3-openid==3.2.0
@@ -50,3 +50,4 @@ tzdata==2024.1
 uritemplate==4.1.1
 urllib3==2.2.1
 virtualenv==20.25.1
+django-cors-headers
