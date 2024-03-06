@@ -24,12 +24,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("SECRET_KEY")
+# SECRET_KEY = os.getenv("SECRET_KEY")
+SECRET_KEY = "django-insecure-ir8*tzr*o!cqe@h)a35pht8($4*-+rqn6qp$f0g$*o9+g(a79n"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", "158.160.13.137", "crm-yandex.ddns.net"]
+# ALLOWED_HOSTS = ["127.0.0.1", "localhost", "158.160.13.137", "crm-yandex.ddns.net"]
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -44,7 +46,8 @@ INSTALLED_APPS = [
     "rest_framework",
     "djoser",
     "users.apps.UsersConfig",
-    "ambassadors.apps.AmbassadorsConfig",
+    "ambassadors",
+    
 ]
 
 MIDDLEWARE = [
@@ -80,7 +83,7 @@ WSGI_APPLICATION = "crm_yandex.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
+"""
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
@@ -89,6 +92,15 @@ DATABASES = {
         "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
         "HOST": os.getenv("DB_HOST"),
         "PORT": os.getenv("DB_PORT"),
+    }
+}
+
+"""
+
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
 }
 
