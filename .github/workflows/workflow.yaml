@@ -3,7 +3,6 @@ name: Workflow
 on:
   push:
     branches:
-      - main
       - dev
 
 jobs:
@@ -48,4 +47,4 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          tags: margoloko/ya_crm_backend:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/ya_crm_backend:latest
