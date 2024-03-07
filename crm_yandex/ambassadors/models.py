@@ -1,3 +1,4 @@
+from django.core.validators import MinValueValidator
 from django.db import models
 
 from .constants import (AMBASSADOR_STATUS_CHOICES, CLOTHING_SIZE_CHOICES,
@@ -5,7 +6,8 @@ from .constants import (AMBASSADOR_STATUS_CHOICES, CLOTHING_SIZE_CHOICES,
                         DECIMAL_MAX_DIGITS, DECIMAL_PLACES, GOAL_MAX_LEN,
                         NAME_MAX_LEN, PHONE_NUM_MAX_LEN, PREFERENCE_MAX_LEN,
                         PROMOCODE_MAX_LEN, SEX_CHOICES, SEX_MAX_LEN,
-                        STATUS_MAX_LEN, TELEGRAM_MAX_LEN)
+                        SHIPMENT_STATUS_CHOICES, STATUS_MAX_LEN,
+                        TELEGRAM_MAX_LEN)
 from .validators import POSTAL_CODE_VALIDATOR, TELEGRAM_USERNAME_VALIDATOR
 
 
@@ -99,7 +101,11 @@ class Ambassador(models.Model):
         related_name="ambassadors",
         through_fields=("ambassador", "activity")
     )
-    blog_link = models.URLField(verbose_name="Ссылка на блог")
+    blog_link = models.URLField(
+        blank=True,
+        null=True,
+        verbose_name="Ссылка на блог"
+    )
     clothing_size = models.CharField(
         max_length=CLOTHING_SIZE_MAX_LEN,
         choices=CLOTHING_SIZE_CHOICES,
@@ -109,16 +115,24 @@ class Ambassador(models.Model):
         verbose_name="Размер ноги"
     )
     comment = models.TextField(
+        blank=True,
+        null=True,
         verbose_name="Комментарий"
     )
-    registration_date = models.DateField(verbose_name="Дата регистрации")
+    registration_date = models.DateField(
+        auto_now_add=True,
+        verbose_name="Дата регистрации"
+        )
     promocode = models.CharField(
         max_length=PROMOCODE_MAX_LEN,
+        blank=True,
+        null=True,
         verbose_name="Промокод"
     )
     status = models.CharField(
         max_length=STATUS_MAX_LEN,
         choices=AMBASSADOR_STATUS_CHOICES,
+        default="active",
         verbose_name="Статус амбассадора"
     )
     preferences = models.ManyToManyField(
@@ -128,9 +142,18 @@ class Ambassador(models.Model):
         related_name="ambassadors",
         through_fields=("ambassador", "preference")
     )
-    guide_one = models.BooleanField(verbose_name="Гайд 1")
-    guide_two = models.BooleanField(verbose_name="Гайд 2")
-    onboarding = models.BooleanField(verbose_name="Онбординг")
+    guide_one = models.BooleanField(
+        default=False,
+        verbose_name="Гайд 1"
+    )
+    guide_two = models.BooleanField(
+        default=False,
+        verbose_name="Гайд 2"
+    )
+    onboarding = models.BooleanField(
+        default=False,
+        verbose_name="Онбординг"
+    )
 
     class Meta:
         verbose_name = "Амбассадор"
@@ -216,7 +239,10 @@ class MerchShipment(models.Model):
         related_name="merch_shipments",
         verbose_name="ID амбассадора"
     )
-    date = models.DateField()
+    date = models.DateField(
+        auto_now_add=True,
+        verbose_name="Дата отправки"
+    )
     merches = models.ManyToManyField(
         Merch,
         through="MerchOnShipping",
@@ -225,7 +251,35 @@ class MerchShipment(models.Model):
         through_fields=("shipping", "merch")
     )
     comment = models.TextField(
+        blank=True,
+        null=True,
         verbose_name="Комментарий"
+    )
+    status = models.CharField(
+        max_length=STATUS_MAX_LEN,
+        choices=SHIPMENT_STATUS_CHOICES,
+        verbose_name="Статус отправки",
+        default="unprocessed"
+    )
+    country = models.CharField(
+        max_length=NAME_MAX_LEN,
+        verbose_name="Страна",
+    )
+    city = models.CharField(
+        max_length=NAME_MAX_LEN,
+        verbose_name="Город",
+    )
+    address = models.CharField(
+        max_length=NAME_MAX_LEN,
+        verbose_name="Адрес проживания"
+    )
+    postal_code = models.PositiveIntegerField(
+        verbose_name="Почтовый индекс",
+        validators=(POSTAL_CODE_VALIDATOR,)
+    )
+    phone_number = models.CharField(
+        max_length=PHONE_NUM_MAX_LEN,
+        verbose_name="Номер телефона"
     )
 
     class Meta:
@@ -249,6 +303,20 @@ class MerchOnShipping(models.Model):
         on_delete=models.CASCADE,
         related_name="merches_on_shipping",
         verbose_name="Мерч"
+    )
+    amount = models.PositiveIntegerField(
+        verbose_name="Количество",
+        default=1,
+        validators=(
+            MinValueValidator(
+                1,
+                message="Укажите количество мерча"
+            ),
+        )
+    )
+    size = models.CharField(
+        max_length=NAME_MAX_LEN,
+        verbose_name="Размер мерча"
     )
 
     class Meta:
@@ -289,7 +357,10 @@ class Content(models.Model):
         verbose_name="Площадка"
     )
     date = models.DateField()
-    guide_followed = models.BooleanField(verbose_name="По гайду да/нет")
+    guide_followed = models.BooleanField(
+        default=False,
+        verbose_name="По гайду да/нет"
+    )
 
     class Meta:
         verbose_name = "Контент амбассадора"
