@@ -4,7 +4,7 @@ from django.db import models
 from .constants import (AMBASSADOR_STATUS_CHOICES, CLOTHING_SIZE_CHOICES,
                         CLOTHING_SIZE_MAX_LEN, COURSE_CHOICES,
                         DECIMAL_MAX_DIGITS, DECIMAL_PLACES, GOAL_MAX_LEN,
-                        NAME_MAX_LEN, PHONE_NUM_MAX_LEN, PREFERENCE_MAX_LEN,
+                        NAME_MAX_LEN, PHONE_NUM_MAX_LEN,
                         PROMOCODE_MAX_LEN, SEX_CHOICES, SEX_MAX_LEN,
                         SHIPMENT_STATUS_CHOICES, STATUS_MAX_LEN,
                         TELEGRAM_MAX_LEN)
@@ -20,21 +20,6 @@ class Activity(models.Model):
     class Meta:
         verbose_name = "Действие в рамках амбассадорства"
         verbose_name_plural = "Действия в рамках амбассадорства"
-        ordering = ["name"]
-
-    def __str__(self):
-        return self.name
-
-
-class Preference(models.Model):
-    name = models.CharField(
-        max_length=PREFERENCE_MAX_LEN,
-        verbose_name="Предпочтение"
-    )
-
-    class Meta:
-        verbose_name = "Предпочтение в рамкха амбассадорства"
-        verbose_name_plural = "Предпочтения в рамкха амбассадорства"
         ordering = ["name"]
 
     def __str__(self):
@@ -136,13 +121,6 @@ class Ambassador(models.Model):
         default="active",
         verbose_name="Статус амбассадора"
     )
-    preferences = models.ManyToManyField(
-        Preference,
-        through="AmbassadorPreference",
-        verbose_name="Предпочтения амбассадора",
-        related_name="ambassadors",
-        through_fields=("ambassador", "preference")
-    )
     guide_one = models.BooleanField(
         default=False,
         verbose_name="Гайд 1"
@@ -171,28 +149,6 @@ class Ambassador(models.Model):
 
     def __str__(self):
         return self.fio
-
-
-class AmbassadorPreference(models.Model):
-    ambassador = models.ForeignKey(
-        Ambassador,
-        on_delete=models.CASCADE,
-        related_name="ambassador_preferences",
-        verbose_name="ID амбассадора"
-    )
-    preference = models.ForeignKey(
-        Preference,
-        on_delete=models.CASCADE,
-        related_name="ambassador_preferences",
-        verbose_name="ID предпочтения"
-    )
-
-    class Meta:
-        verbose_name = "Амбассадор-Предпочтение"
-        verbose_name_plural = "Амбассадор-Предпочтения"
-
-    def __str__(self):
-        return f"{self.ambassador} - {self.preference}"
 
 
 class AmbassadorActivity(models.Model):

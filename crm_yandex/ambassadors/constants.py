@@ -61,7 +61,6 @@ CLOTHING_SIZE_CHOICES = [
 ]
 CLOTHING_SIZE_MAX_LEN: int = 2
 PROMOCODE_MAX_LEN: int = 20
-PREFERENCE_MAX_LEN: int = 255
 TELEGRAM_MAX_LEN: int = 32
 SHIPMENT_STATUS_CHOICES = [
     ("unprocessed", "Необработанные"),
