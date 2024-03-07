@@ -8,6 +8,7 @@ from .constants import (AMBASSADOR_STATUS_CHOICES, CLOTHING_SIZE_CHOICES,
                         PROMOCODE_MAX_LEN, SEX_CHOICES, SEX_MAX_LEN,
                         SHIPMENT_STATUS_CHOICES, STATUS_MAX_LEN,
                         TELEGRAM_MAX_LEN)
+
 from .validators import POSTAL_CODE_VALIDATOR, TELEGRAM_USERNAME_VALIDATOR
 
 

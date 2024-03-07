@@ -4,6 +4,7 @@ from django.utils import timezone
 
 from .models import (Activity, Ambassador, AmbassadorActivity, Content, Merch,
                      MerchOnShipping, MerchShipment, Notification, Venue)
+
 from .validators import POSTAL_CODE_VALIDATOR, TELEGRAM_USERNAME_VALIDATOR
 
 
