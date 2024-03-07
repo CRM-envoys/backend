@@ -2,9 +2,8 @@ from django.core.exceptions import ValidationError
 from django.test import TestCase
 from django.utils import timezone
 
-from .models import (Activity, Ambassador, AmbassadorActivity,
-                     AmbassadorPreference, Content, Merch, MerchOnShipping,
-                     MerchShipment, Preference, Venue)
+from .models import (Activity, Ambassador, AmbassadorActivity, Content, Merch,
+                     MerchOnShipping, MerchShipment, Notification, Venue)
 from .validators import POSTAL_CODE_VALIDATOR, TELEGRAM_USERNAME_VALIDATOR
 
 
@@ -12,7 +11,6 @@ class AmbassadorTests(TestCase):
 
     def setUp(self):
         self.activity = Activity.objects.create(name="Test_activity")
-        self.preference = Preference.objects.create(name="Test_preference")
         self.ambassador = Ambassador.objects.create(
             fio="Тест Тестов Тестович",
             sex="М",
@@ -36,6 +34,7 @@ class AmbassadorTests(TestCase):
             guide_one=False,
             guide_two=False,
             onboarding=False,
+            viewed=False,
         )
         self.merch = Merch.objects.create(
             merch_type="test",
@@ -64,22 +63,19 @@ class AmbassadorTests(TestCase):
             ambassador=self.ambassador,
             activity=self.activity
         )
-        self.ambassador_preference = AmbassadorPreference.objects.create(
-            ambassador=self.ambassador,
-            preference=self.preference
-        )
         self.merch_on_shipping = MerchOnShipping.objects.create(
             shipping=self.merch_shipment,
             merch=self.merch,
             amount=1,
             size="M"
         )
+        self.notification = Notification.objects.create(
+            text="Тестовый текст",
+            viewed=False
+        )
 
     def test_activity_listing(self):
         self.assertEqual(self.activity.name, "Test_activity")
-
-    def test_preference_listing(self):
-        self.assertEqual(self.preference.name, "Test_preference")
 
     def test_ambassador_listing(self):
         self.assertEqual(self.ambassador.fio, "Тест Тестов Тестович")
@@ -107,6 +103,7 @@ class AmbassadorTests(TestCase):
         self.assertEqual(self.ambassador.guide_one, False)
         self.assertEqual(self.ambassador.guide_two, False)
         self.assertEqual(self.ambassador.onboarding, False)
+        self.assertEqual(self.ambassador.viewed, False)
 
     def test_merch_listing(self):
         self.assertEqual(self.merch.merch_type, "test")
@@ -127,10 +124,13 @@ class AmbassadorTests(TestCase):
         self.assertEqual(self.merch_shipment.postal_code, "123456")
         self.assertEqual(self.ambassador.phone_number, "+75555555555")
 
+    def test_notification_listing(self):
+        self.assertEqual(self.notification.text, "Тестовый текст")
+        self.assertEqual(self.notification.viewed, False)
+
     def test_models_have_correct_object_names(self):
         model_str = {
             self.activity: self.activity.name,
-            self.preference: self.preference.name,
             self.ambassador: self.ambassador.fio,
             self.merch: f"{self.merch.merch_type} - {self.merch.cost}",
             self.merch_shipment: (
@@ -141,7 +141,8 @@ class AmbassadorTests(TestCase):
             self.content: (
                 f"Амбассадор: {self.content.ambassador.fio} "
                 f"{self.content.link}"
-            )
+            ),
+            self.notification: self.notification.text,
         }
         for model, expected_value in model_str.items():
             with self.subTest(model=model):
@@ -150,12 +151,6 @@ class AmbassadorTests(TestCase):
     def test_relationships(self):
         self.assertEqual(self.ambassador_activity.ambassador, self.ambassador)
         self.assertEqual(self.ambassador_activity.activity, self.activity)
-        self.assertEqual(
-            self.ambassador_preference.ambassador, self.ambassador
-        )
-        self.assertEqual(
-            self.ambassador_preference.preference, self.preference
-        )
         self.assertEqual(self.merch_on_shipping.shipping, self.merch_shipment)
         self.assertEqual(self.merch_on_shipping.merch, self.merch)
         self.assertEqual(self.merch_shipment.ambassador, self.ambassador)

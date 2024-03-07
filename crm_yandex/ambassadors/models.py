@@ -121,7 +121,8 @@ class Ambassador(models.Model):
     )
     registration_date = models.DateField(
         auto_now_add=True,
-        verbose_name="Дата регистрации"
+        verbose_name="Дата регистрации",
+        db_index=True
         )
     promocode = models.CharField(
         max_length=PROMOCODE_MAX_LEN,
@@ -153,6 +154,14 @@ class Ambassador(models.Model):
     onboarding = models.BooleanField(
         default=False,
         verbose_name="Онбординг"
+    )
+    viewed = models.BooleanField(
+        default=False,
+        verbose_name="Просмотрено/не просмотрено"
+    )
+    updated = models.DateTimeField(
+        auto_now=True,
+        verbose_name="Обновлено"
     )
 
     class Meta:
@@ -241,7 +250,8 @@ class MerchShipment(models.Model):
     )
     date = models.DateField(
         auto_now_add=True,
-        verbose_name="Дата отправки"
+        verbose_name="Дата отправки",
+        db_index=True
     )
     merches = models.ManyToManyField(
         Merch,
@@ -349,7 +359,7 @@ class Content(models.Model):
         related_name="content",
         verbose_name="Амбассадор"
     )
-    link = models.URLField()
+    link = models.URLField(null=True)
     venue = models.ForeignKey(
         Venue,
         on_delete=models.CASCADE,
@@ -361,6 +371,16 @@ class Content(models.Model):
         default=False,
         verbose_name="По гайду да/нет"
     )
+    updated = models.DateTimeField(
+        auto_now=True,
+        verbose_name="Обновлено"
+    )
+    image = models.ImageField(
+        upload_to="images/",
+        verbose_name="Изображение",
+        blank=True,
+        null=True
+    )
 
     class Meta:
         verbose_name = "Контент амбассадора"
@@ -371,3 +391,24 @@ class Content(models.Model):
         return (
             f"Амбассадор: {self.ambassador} {self.link}"
         )
+
+
+class Notification(models.Model):
+    text = models.TextField(verbose_name="Текст уведомления")
+    created = models.DateField(
+        auto_now_add=True,
+        verbose_name="Дата создания",
+        db_index=True
+    )
+    viewed = models.BooleanField(
+        default=False,
+        verbose_name="Просмотрено/не просмотрено"
+    )
+
+    class Meta:
+        verbose_name = "Уведомление"
+        verbose_name_plural = "Уведомления"
+        ordering = ["-created"]
+
+    def __str__(self):
+        return f"{self.text[:15]}"
