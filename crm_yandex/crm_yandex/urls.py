@@ -7,6 +7,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("authorize/", include("djoser.urls")),
     path("authorize/", include("djoser.urls.jwt")),
+    path("api/", include("api.urls")),
 ]
 if settings.DEBUG:
     urlpatterns += static(
