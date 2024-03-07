@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from .models import (Activity, Ambassador, AmbassadorActivity, Content, Merch,
-                     MerchOnShipping, MerchShipment, Venue)
+                     MerchOnShipping, MerchShipment, Notification, Venue)
 
 
 class AmbassadorActivityInline(admin.TabularInline):
@@ -49,6 +49,12 @@ class AmbassadorAdmin(admin.ModelAdmin):
     empty_value_display = "-пусто"
 
 
+class NotificationAdmin(admin.ModelAdmin):
+    list_display = ("text", "created")
+    list_filter = ("created",)
+    empty_value_display = "-пусто"
+
+
 admin.site.register(Activity, ActivityAdmin)
 admin.site.register(Ambassador, AmbassadorAdmin)
 admin.site.register(AmbassadorActivity)
@@ -57,3 +63,4 @@ admin.site.register(MerchOnShipping)
 admin.site.register(MerchShipment, MerchShipmentAdmin)
 admin.site.register(Merch, MerchAdmin)
 admin.site.register(Venue, VenueAdmin)
+admin.site.register(Notification, NotificationAdmin)
