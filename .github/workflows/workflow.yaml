@@ -63,6 +63,6 @@ jobs:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USER }}
         key: ${{ secrets.SSH_KEY }}
-        passphrase: ${{ secrets.SSH_PASSPHRASE }}
+        # passphrase: # S!!! {{ secrets.SSH_PASSPHRASE }}
         source: 'infra/docker-compose.yml'
         target: '~/amba/'
