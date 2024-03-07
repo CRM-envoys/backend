@@ -3,24 +3,96 @@
 ![django version](https://img.shields.io/badge/Django-4.2-green)
 ![djangorestframework version](https://img.shields.io/badge/DRF-3.14-green)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![codecov](https://codecov.io/gh/CRM-for-Yandex-ambassadors/backend/graph/badge.svg?token=AWKLAD8MLB)](https://codecov.io/gh/CRM-for-Yandex-ambassadors/backend)
 ### Оглавление:
-- [Бэкенд CRM для Амбассадоров Яндекс Практикума](#бэкенд-CRM)
-    - [О проекте:](#о-проекте)
-    - [Оглавление:](#оглавление)
+- [backend CRM](#backend-crm)
+    - [О проекте](#о-проекте)
   - [Запуск приложения](#запуск-приложения)
       - [Запуск приложения на локальном сервере](#запуск-приложения-на-локальном-сервере)
-      - [Запуск тестов:](#запуск-тестов)
-      - [Документация API доступна по адресам:](#документация-api-доступна-по-адресам)
-      - [Админка доступна по адресу:](#админка-доступна-по-адресу)
+      - [Запуск тестов](#запуск-тестов)
     - [Установка pre-commit hooks](#установка-pre-commit-hooks)
       - [Установка pre-commit](#установка-pre-commit)
       - [Установка hooks](#установка-hooks)
-    - [Работа с commitizen](#работа-с-commitizen)
+      - [Работа с commitizen](#работа-с-commitizen)
   - [Используемые технологии](#используемые-технологии)
   - [Авторы](#авторы)
 
 ### О проекте:
 CRM-система для Амбассадоров Яндекс Практикума - это пространство для комьюнити менеджера сообщества амбассадоров, в котором можно получать уведомления, делать рассылки и смотреть аналитику. 
+
+## Запуск приложения
+**Клонирование реппозитория**
+
+```sh
+git clone git@github.com:CRM-for-Yandex-ambassadors/backend.git
+```
+
+Перейдите в папку с проектом recruitment-process-back, установите и запустите виртуальное окружение.
+
+```sh
+cd recruitment-process-back
+```
+
+```sh
+python -m venv venv
+```
+
+* Если у вас Linux/MacOS
+
+    ```
+    source venv/bin/activate
+    ```
+
+* Если у вас windows
+
+    ```
+    source venv/Scripts/activate
+    ```
+**Установка зависимостей**
+
+  ```sh
+  pip install -r requirements.txt
+  ```
+**Применяем миграции:**
+
+  ```sh
+  python manage.py migrate
+  ```
+**Создаем суперпользователя:**
+
+  ```
+  python manage.py createsuperuser
+  ```
+
+#### Запуск приложения на локальном сервере
+Перейдите в папку crm_backend
+```sh
+cd crm_backend
+```
+
+* Если у вас windows
+    ```sh
+    python manage.py runserver
+    ```
+* Если у вас Linux/MacOS
+    ```sh
+    python3 manage.py runserver
+    ```
+
+#### Запуск тестов
+```sh
+python manage.py test
+```
+Для проверки процента покрытия тестами вам необходимо установить библиотеку coverage и выполнить команды:
+```sh
+pip install coverage
+```
+```sh
+coverage run -m unittest discover
+```
+```sh
+coverage report -m
+```
 
 ### Установка pre-commit hooks
 
