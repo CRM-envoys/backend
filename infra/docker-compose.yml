@@ -2,6 +2,7 @@ version: '3'
 
 volumes:
   pg_data:
+  static:
 
 services:
   db:
@@ -11,10 +12,12 @@ services:
       - pg_data:/var/lib/postgresql/data
 
   backend:
-    image: devinse/ya_crm_backend:latest
+    container_name: backend_amba
+    image: devinse/ya_crm_backend
     restart: always
-    build: ../.
     env_file: .env
+    volumes:
+      - static:/app/static/
     depends_on:
       - db
 
