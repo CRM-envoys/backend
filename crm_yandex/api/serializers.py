@@ -19,7 +19,14 @@ class AmbassadorSerializer(serializers.ModelSerializer):
     sex = serializers.ChoiceField(choices=SEX_CHOICES)
     course = serializers.ChoiceField(choices=COURSE_CHOICES)
     clothing_size = serializers.ChoiceField(choices=CLOTHING_SIZE_CHOICES)
-    status = serializers.ChoiceField(choices=AMBASSADOR_STATUS_CHOICES)
+    status = serializers.ChoiceField(
+        choices=AMBASSADOR_STATUS_CHOICES,
+        required=False
+    )
+    onboarding = serializers.BooleanField(required=False)
+    guide_one = serializers.BooleanField(required=False)
+    guide_two = serializers.BooleanField(required=False)
+    viewed = serializers.BooleanField(required=False)
 
     class Meta:
         model = Ambassador

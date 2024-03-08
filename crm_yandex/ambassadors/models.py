@@ -1,5 +1,6 @@
 from django.core.validators import MinValueValidator
 from django.db import models
+from django.db.models import Q
 
 from .constants import (AMBASSADOR_STATUS_CHOICES, CLOTHING_SIZE_CHOICES,
                         CLOTHING_SIZE_MAX_LEN, COURSE_CHOICES,
@@ -25,6 +26,23 @@ class Activity(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class AmbassadorManager(models.Manager):
+    def get_queryset(self):
+        ambassadors = super().get_queryset()
+
+        new_ambassadors = ambassadors.filter(viewed=False)
+        new_content = ambassadors.filter(
+            content__guide_followed=True,
+            content__viewed=False
+        )
+        other_ambassadors = ambassadors.exclude(Q(viewed=False) | Q(
+                content__guide_followed=True, content__viewed=False)
+                ).order_by("-registration_date")
+        queryset = new_ambassadors | new_content | other_ambassadors
+
+        return queryset
 
 
 class Ambassador(models.Model):
@@ -142,11 +160,11 @@ class Ambassador(models.Model):
         auto_now=True,
         verbose_name="Обновлено"
     )
+    objects = AmbassadorManager()
 
     class Meta:
         verbose_name = "Амбассадор"
         verbose_name_plural = "Амбассадоры"
-        ordering = ["-registration_date"]
 
     def __str__(self):
         return self.fio
@@ -337,6 +355,10 @@ class Content(models.Model):
         verbose_name="Изображение",
         blank=True,
         null=True
+    )
+    viewed = models.BooleanField(
+        default=False,
+        verbose_name="Просмотрено/не просмотрено"
     )
 
     class Meta:
