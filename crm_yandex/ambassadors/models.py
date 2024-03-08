@@ -5,9 +5,11 @@ from django.db.models import Q
 from .constants import (AMBASSADOR_STATUS_CHOICES, CLOTHING_SIZE_CHOICES,
                         CLOTHING_SIZE_MAX_LEN, COURSE_CHOICES,
                         DECIMAL_MAX_DIGITS, DECIMAL_PLACES, GOAL_MAX_LEN,
-                        NAME_MAX_LEN, PHONE_NUM_MAX_LEN, PROMOCODE_MAX_LEN,
-                        SEX_CHOICES, SEX_MAX_LEN, SHIPMENT_STATUS_CHOICES,
-                        STATUS_MAX_LEN, TELEGRAM_MAX_LEN)
+                        NAME_MAX_LEN, PHONE_NUM_MAX_LEN,
+                        PROMOCODE_MAX_LEN, SEX_CHOICES, SEX_MAX_LEN,
+                        SHIPMENT_STATUS_CHOICES, STATUS_MAX_LEN,
+                        TELEGRAM_MAX_LEN)
+
 from .validators import POSTAL_CODE_VALIDATOR, TELEGRAM_USERNAME_VALIDATOR
 
 
