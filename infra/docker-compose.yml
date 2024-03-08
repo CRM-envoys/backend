@@ -21,6 +21,21 @@ services:
     depends_on:
       - db
 
+  nginx:
+    container_name: nginx-amba
+    env_file: .env
+    image: devinse/nginx
+    restart: always
+    ports:
+      - 80:80
+    depends_on:
+      - frontend
+    volumes:
+      - static:/etc/nginx/html/static/
+
+
+
+
   #frontend:
   #  image: margoloko/ya_crm_frontend:latest
   #  volumes:
