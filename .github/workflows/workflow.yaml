@@ -1,4 +1,4 @@
-name: Nex
+name: Next
 
 on:
   push:
@@ -67,3 +67,30 @@ jobs:
         # passphrase: # S!!! {{ secrets.SSH_PASSPHRASE }}
         source: 'infra/docker-compose.yml'
         target: '~/amba/'
+    - name: executing remote ssh command to deploy
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USER }}
+        password: ${{ secrets.PASSWORD }}
+        # key: ${{ secrets.SSH_KEY }}
+        # passphrase: ${{ secrets.SSH_PASSPHRASE }}
+        script: |
+          cd amba/infra/
+          sudo docker compose stop
+          sudo docker ps -a | grep Exit | cut -d ' ' -f 1 | xargs sudo docker rm
+          touch .env
+          echo '# Абассадорам, Привет!' | sudo tee .env
+          sudo echo DB_ENGINE=${{ secrets.DB_ENGINE }} >> .env
+          sudo echo DB_NAME=${{ secrets.DB_NAME }} >> .env
+          sudo echo POSTGRES_USER=${{ secrets.POSTGRES_USER }} >> .env
+          sudo echo POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} >> .env
+          sudo echo DB_HOST=${{ secrets.DB_HOST }} >> .env
+          sudo echo DB_PORT=${{ secrets.DB_PORT }} >> .env
+          sudo echo SECRET_KEY='${{ secrets.SECRET_KEY }}' >> .env
+          sudo echo DEBUG='${{ secrets.DEBUG }}' >> .env
+          sudo docker rmi ${{ secrets.DOCKER_USERNAME }}/ya_crm_backend
+          sudo docker compose up -d
+          sudo docker image prune -af
+          sudo docker compose exec -T backend python manage.py migrate
+          sudo docker compose exec -T backend python manage.py collectstatic --no-input
