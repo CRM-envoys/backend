@@ -57,7 +57,7 @@ jobs:
     steps:
     - name: checkout repo
       uses: actions/checkout@v3     
-    - name: copy docker-compose.yml and nginx.conf via ssh
+    - name: copy docker-compose.yml # and nginx.conf via ssh
       uses: appleboy/scp-action@v0.1.4
       with:
         host: ${{ secrets.HOST }}
