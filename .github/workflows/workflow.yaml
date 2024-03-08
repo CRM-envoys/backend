@@ -79,6 +79,7 @@ jobs:
           cd amba/infra/
           sudo docker compose stop
           sudo docker ps -a | grep Exit | cut -d ' ' -f 1 | xargs sudo docker rm
+          cd ..
           touch .env
           echo '# Абассадорам, Привет!' | sudo tee .env
           sudo echo DB_ENGINE=${{ secrets.DB_ENGINE }} >> .env
