@@ -11,7 +11,7 @@ services:
       - pg_data:/var/lib/postgresql/data
 
   backend:
-    image: margoloko/ya_crm_backend:latest
+    image: devinse/ya_crm_backend:latest
     restart: always
     build: ../.
     env_file: ../.env
