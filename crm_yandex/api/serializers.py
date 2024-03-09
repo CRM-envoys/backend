@@ -25,7 +25,12 @@ class AmbassadorSerializer(serializers.ModelSerializer):
     status = serializers.ChoiceField(
         choices=AMBASSADOR_STATUS_CHOICES,
         default="active"
+        required=False
     )
+    onboarding = serializers.BooleanField(required=False)
+    guide_one = serializers.BooleanField(required=False)
+    guide_two = serializers.BooleanField(required=False)
+    viewed = serializers.BooleanField(required=False)
 
     class Meta:
         model = Ambassador

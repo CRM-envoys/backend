@@ -2,21 +2,39 @@ version: '3'
 
 volumes:
   pg_data:
+  static:
 
 services:
   db:
     image: postgres:13.10
-    env_file: ../.env
+    env_file: .env
     volumes:
       - pg_data:/var/lib/postgresql/data
 
   backend:
-    image: margoloko/ya_crm_backend:latest
+    container_name: backend_amba
+    image: devinse/ya_crm_backend
     restart: always
-    build: ../.
-    env_file: ../.env
+    env_file: .env
+    volumes:
+      - static:/app/static/
     depends_on:
       - db
+
+  nginx:
+    container_name: nginx-amba
+    env_file: .env
+    image: devinse/nginx
+    restart: always
+    ports:
+      - 80:80
+    depends_on:
+      - backend
+    volumes:
+      - static:/etc/nginx/html/static/
+
+
+
 
   #frontend:
   #  image: margoloko/ya_crm_frontend:latest
@@ -26,10 +44,10 @@ services:
   #  depends_on:
   #    - backend
 
-  nginx:
-    build: .
+  # nginx:
+    # build: .
     # Ключ ports устанавливает
     # перенаправление всех запросов с порта 8000 хоста
     # на порт 80 контейнера.
-    ports:
-      - 8000:80
+    # ports:
+      # - 8000:80
