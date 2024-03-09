@@ -24,7 +24,7 @@ class AmbassadorSerializer(serializers.ModelSerializer):
     clothing_size = serializers.ChoiceField(choices=CLOTHING_SIZE_CHOICES)
     status = serializers.ChoiceField(
         choices=AMBASSADOR_STATUS_CHOICES,
-        default="active"
+        default="active",
         required=False
     )
     onboarding = serializers.BooleanField(required=False)
