@@ -3,7 +3,7 @@ name: Next
 on:
   push:
     branches:
-      - dev
+      - feat/workflow
 
 jobs:
   tests:
