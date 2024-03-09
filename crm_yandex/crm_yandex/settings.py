@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     "django_filters",
     "corsheaders",
     "djoser",
+    "api",
     "users.apps.UsersConfig",
     "ambassadors.apps.AmbassadorsConfig",
 ]
