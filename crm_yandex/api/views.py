@@ -1,7 +1,8 @@
 from rest_framework import viewsets
+from django_filters.rest_framework import DjangoFilterBackend
 
-from .serializers import ActivitySerializer, AmbassadorSerializer
-from ambassadors.models import Activity, Ambassador
+from api.serializers import ActivitySerializer, AmbassadorSerializer, ContentSerializer
+from ambassadors.models import Activity, Ambassador, Content
 
 
 class ActivityViewSet(viewsets.ModelViewSet):
@@ -14,3 +15,10 @@ class AmbassadorViewSet(viewsets.ModelViewSet):
         "ambassador_activities__activity"
     ).all()
     serializer_class = AmbassadorSerializer
+
+
+class ContentViewSet(viewsets.ModelViewSet):
+    queryset = Content.objects.all()
+    serializer_class = ContentSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['ambassador', 'venue']

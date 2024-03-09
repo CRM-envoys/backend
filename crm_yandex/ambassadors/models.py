@@ -109,7 +109,7 @@ class Ambassador(models.Model):
         auto_now_add=True,
         verbose_name="Дата регистрации",
         db_index=True
-        )
+    )
     promocode = models.CharField(
         max_length=PROMOCODE_MAX_LEN,
         blank=True,
@@ -316,14 +316,21 @@ class Content(models.Model):
         related_name="content",
         verbose_name="Амбассадор"
     )
-    link = models.URLField(null=True)
+    link = models.URLField(
+        null=True,
+        verbose_name='Ссылка на контент'
+    )
     venue = models.ForeignKey(
         Venue,
-        on_delete=models.CASCADE,
-        related_name="content",
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
         verbose_name="Площадка"
     )
-    date = models.DateField()
+    created = models.DateField(
+        auto_now_add=True,
+        verbose_name='Дата добавления'
+    )
     guide_followed = models.BooleanField(
         default=False,
         verbose_name="По гайду да/нет"
@@ -332,9 +339,9 @@ class Content(models.Model):
         auto_now=True,
         verbose_name="Обновлено"
     )
-    image = models.ImageField(
-        upload_to="images/",
-        verbose_name="Изображение",
+    file = models.FileField(
+        upload_to="ambassadors/content/files/",
+        verbose_name="Файл/Картинка контента",
         blank=True,
         null=True
     )
@@ -342,7 +349,7 @@ class Content(models.Model):
     class Meta:
         verbose_name = "Контент амбассадора"
         verbose_name_plural = "Контент амбассадора"
-        ordering = ["-date"]
+        ordering = ["-created"]
 
     def __str__(self):
         return (

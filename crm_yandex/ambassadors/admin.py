@@ -9,6 +9,11 @@ class AmbassadorActivityInline(admin.TabularInline):
     extra = 1
 
 
+class AmbassadorContentInline(admin.TabularInline):
+    model = Content
+    extra = 1
+
+
 class MerchOnShippingInline(admin.TabularInline):
     model = MerchOnShipping
     extra = 1
@@ -37,7 +42,7 @@ class MerchShipmentAdmin(admin.ModelAdmin):
 
 
 class ContentAdmin(admin.ModelAdmin):
-    list_display = ("ambassador", "link", "date", "guide_followed")
+    list_display = ("ambassador", "link", "created", "guide_followed")
     list_filter = ("ambassador", "venue", "guide_followed")
     empty_value_display = "-пусто"
 
@@ -45,7 +50,7 @@ class ContentAdmin(admin.ModelAdmin):
 class AmbassadorAdmin(admin.ModelAdmin):
     list_display = ("fio", "telegram", "promocode", "status")
     list_filter = ("fio", "status")
-    inlines = (AmbassadorActivityInline,)
+    inlines = (AmbassadorActivityInline, AmbassadorContentInline)
     empty_value_display = "-пусто"
 
 
