@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     "djoser",
     "users.apps.UsersConfig",
     "ambassadors",
-    
 ]
 
 MIDDLEWARE = [
