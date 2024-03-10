@@ -1,10 +1,13 @@
-# backend CRM
+## [Система учета Амбассадоров](http://devinse.store/admin/)     http://devinse.store/admin/
+
 ![example workflow](https://github.com/CRM-for-Yandex-ambassadors/backend/actions/workflows/workflow.yaml/badge.svg)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 ![python version](https://img.shields.io/badge/Python-3.11-green)
 ![django version](https://img.shields.io/badge/Django-4.2-green)
 ![djangorestframework version](https://img.shields.io/badge/DRF-3.14-green)
+
+
 ### Оглавление:
 - [backend CRM](#backend-crm)
     - [О проекте](#о-проекте)
@@ -19,13 +22,10 @@
   - [Авторы](#авторы)
   - [Swagger](#Swagger)
 
-
-[Сайт учета Амбасадоров](http://devinse.store/admin/)
-
 ### О проекте:
 CRM-система для Амбассадоров Яндекс Практикума - это пространство для комьюнити менеджера сообщества амбассадоров, в котором можно получать уведомления, делать рассылки и смотреть аналитику. 
 
-## Запуск приложения
+### Запуск приложения
 **Клонирование реппозитория**
 
 ```sh
