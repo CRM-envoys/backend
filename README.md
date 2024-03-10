@@ -17,6 +17,7 @@
       - [Работа с commitizen](#работа-с-commitizen)
   - [Используемые технологии](#используемые-технологии)
   - [Авторы](#авторы)
+  - [Swagger](#Swagger)
 
 ### О проекте:
 CRM-система для Амбассадоров Яндекс Практикума - это пространство для комьюнити менеджера сообщества амбассадоров, в котором можно получать уведомления, делать рассылки и смотреть аналитику. 
@@ -28,7 +29,7 @@ CRM-система для Амбассадоров Яндекс Практику
 git clone git@github.com:CRM-for-Yandex-ambassadors/backend.git
 ```
 
-Перейдите в папку с проектом recruitment-process-back, установите и запустите виртуальное окружение.
+Перейдите в папку с проектом backend, установите и запустите виртуальное окружение.
 
 ```sh
 cd recruitment-process-back
@@ -151,3 +152,6 @@ cz c
 - [Виноградов Сергей](https://github.com/yan-gabala)
 - [Раскатов Андрей](https://github.com/Diavolution)
 - [Климов Артем](https://github.com/grinchomsk)
+
+## Swagger
+[Swagger](https://drive.google.com/file/d/1Kbyb8UvEl_VYOHmAaI1J2HfvSLDgcuGT/view?usp=drive_link)
