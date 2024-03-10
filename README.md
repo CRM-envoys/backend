@@ -1,4 +1,4 @@
-## [Сайт учета Амбасадоров](http://devinse.store/admin/)  http://devinse.store/admin/
+## [Система учета Амбассадоров](http://devinse.store/admin/)     http://devinse.store/admin/
 
 ![example workflow](https://github.com/CRM-for-Yandex-ambassadors/backend/actions/workflows/workflow.yaml/badge.svg)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
