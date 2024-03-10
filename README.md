@@ -5,7 +5,11 @@
 ![python version](https://img.shields.io/badge/Python-3.11-green)
 ![django version](https://img.shields.io/badge/Django-4.2-green)
 ![djangorestframework version](https://img.shields.io/badge/DRF-3.14-green)
-### Оглавление:
+
+
+### [Сайт учета Амбасадоров](http://devinse.store/admin/)
+
+## Оглавление:
 - [backend CRM](#backend-crm)
     - [О проекте](#о-проекте)
   - [Запуск приложения](#запуск-приложения)
@@ -19,10 +23,7 @@
   - [Авторы](#авторы)
   - [Swagger](#Swagger)
 
-
-[Сайт учета Амбасадоров](http://devinse.store/admin/)
-
-### О проекте:
+## О проекте:
 CRM-система для Амбассадоров Яндекс Практикума - это пространство для комьюнити менеджера сообщества амбассадоров, в котором можно получать уведомления, делать рассылки и смотреть аналитику. 
 
 ## Запуск приложения
