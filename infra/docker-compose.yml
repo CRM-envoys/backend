@@ -17,7 +17,7 @@ services:
     restart: always
     env_file: .env
     volumes:
-      - static:/backend/static/
+      - static:/static/
     depends_on:
       - db
 
@@ -33,21 +33,3 @@ services:
     volumes:
       - static:/etc/nginx/html/static/
 
-
-
-
-  #frontend:
-  #  image: margoloko/ya_crm_frontend:latest
-  #  volumes:
-  #    - ...
-  #  env_file: ../.env
-  #  depends_on:
-  #    - backend
-
-  # nginx:
-    # build: .
-    # Ключ ports устанавливает
-    # перенаправление всех запросов с порта 8000 хоста
-    # на порт 80 контейнера.
-    # ports:
-      # - 8000:80
