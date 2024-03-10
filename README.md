@@ -35,7 +35,7 @@ git clone git@github.com:CRM-for-Yandex-ambassadors/backend.git
 Перейдите в папку с проектом backend, установите и запустите виртуальное окружение.
 
 ```sh
-cd recruitment-process-back
+cd backend
 ```
 
 ```sh
