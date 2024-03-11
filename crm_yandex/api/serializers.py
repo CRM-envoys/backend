@@ -81,7 +81,7 @@ class AmbassadorSerializer(serializers.ModelSerializer):
 
 
 class ContentSerializer(serializers.ModelSerializer):
-    file = serializers.MethodField()
+    file = serializers.SerializerMethodField()
 
     class Meta:
         model = Content
