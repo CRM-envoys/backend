@@ -1,5 +1,5 @@
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import filters, viewsets
+from rest_framework import filters, viewsets, permissions
 
 from ambassadors.models import Activity, Ambassador, Content
 from .serializers import ActivitySerializer, AmbassadorSerializer, ContentSerializer
@@ -24,6 +24,7 @@ class AmbassadorViewSet(viewsets.ModelViewSet):
     filterset_class = AmbassadorFilter
     search_fields = ("fio", "telegram")
     ordering_fields = ("fio", "status", "-date_registration")
+    permission_classes = [permissions.AllowAny]
 
 
 
@@ -32,3 +33,4 @@ class ContentViewSet(viewsets.ModelViewSet):
     serializer_class = ContentSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['ambassador', 'venue']
+    permission_classes = [permissions.AllowAny]
