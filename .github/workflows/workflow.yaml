@@ -3,7 +3,7 @@ name: Next
 on:
   push:
     branches:
-      - devv
+      - main
 
 jobs:
   tests:
@@ -58,7 +58,7 @@ jobs:
           tags: ${{ secrets.DOCKER_USERNAME }}/nginx-am:latest
 
   deploy:
-    if: github.ref == 'refs/heads/devv'
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     needs:
       build_and_push_to_docker_hub

@@ -24,7 +24,7 @@ services:
   nginx:
     container_name: nginx-amba
     env_file: .env
-    image: devinse/nginx
+    image: devinse/nginx-am
     restart: always
     ports:
       - 80:80
