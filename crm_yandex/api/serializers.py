@@ -47,6 +47,8 @@ class AmbassadorSerializer(serializers.ModelSerializer):
         )
 
     def to_internal_value(self, data):
+        if  'params' in data:
+            data = data.pop('params')
         course = data.pop("course")
         for course_choice in COURSE_CHOICES:
             if course == course_choice[1]:
@@ -58,6 +60,8 @@ class AmbassadorSerializer(serializers.ModelSerializer):
             )
 
         data["course"] = course
+        if Ambassador.objects.filter(fio=data['fio'], telegram=data['telegram']).exists():
+            raise serializers.ValidationError({"ambassador": "already exist"})
         return super().to_internal_value(data)
 
     def create(self, validated_data):
@@ -77,7 +81,7 @@ class AmbassadorSerializer(serializers.ModelSerializer):
 
 
 class ContentSerializer(serializers.ModelSerializer):
-    file = serializers.SerializerMethodField()
+    file = serializers.MethodField()
 
     class Meta:
         model = Content
@@ -93,14 +97,14 @@ class ContentSerializer(serializers.ModelSerializer):
         ]
 
     def to_internal_value(self, data):
-        if 'ambassadors' not in data:
+        if 'params' in data:
+            data = data.pop('params')
+            data['guide_followed'] = True if data['guide_followed'] == 'Да' else False
             ambassador = Ambassador.objects.filter(
-                fio=data.get('fio'), telegram=data.get('telegram')
+                fio=data.pop('fio'), telegram=data.pop('telegram')
             )
             if ambassador.exists():
-                data['ambassador'] = Ambassador.objects.filter(
-                    fio=data.pop('fio'), telegram=data.pop('telegram')
-                )[0]
+                data['ambassador'] = ambassador[0]
                 return data
             raise serializers.ValidationError(
                 {'ambassador': 'Амбассадор с указанными даннми не найден'}
@@ -114,7 +118,7 @@ class ContentSerializer(serializers.ModelSerializer):
         attrs['venue'] = venue[0]
         return super().validate(attrs)
 
-    def get_image(self, obj):
+    def get_file(self, obj):
         if obj.file:
             return obj.file.url
         return None
