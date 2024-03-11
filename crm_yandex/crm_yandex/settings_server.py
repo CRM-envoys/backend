@@ -24,12 +24,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = os.getenv("SECRET_KEY")
-SECRET_KEY = "django-insecure-ir8*tzr*o!cqe@h)a35pht8($4*-+rqn6qp$f0g$*o9+g(a79n"
+SECRET_KEY = os.getenv("SECRET_KEY", "django-insecure-ir8*tzr*o!cqe@h)a35pht8($4*-+rqn6qp$f0g$*o9+g(a79n")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+ALLOWED_HOSTS = ["92.63.105.199", "devinse.store"]
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
@@ -48,15 +48,18 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    "django_filters",
+    "corsheaders",
     "djoser",
     "api",
     "users.apps.UsersConfig",
-    "ambassadors",
+    "ambassadors.apps.AmbassadorsConfig",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -98,16 +101,18 @@ DATABASES = {
         "PORT": os.getenv("DB_PORT"),
     }
 }
-
 """
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": os.getenv("DB_ENGINE", default="django.db.backends.postgresql"),
+        "NAME": os.getenv("DB_NAME", default="postgres"),
+        "USER": os.getenv("POSTGRES_USER", default="postgres"),
+        "PASSWORD": os.getenv("POSTGRES_PASSWORD", default="postgres"),
+        "HOST": os.getenv("DB_HOST", default="db"),
+        "PORT": os.getenv("DB_PORT", default="5432"),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -160,6 +165,9 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
