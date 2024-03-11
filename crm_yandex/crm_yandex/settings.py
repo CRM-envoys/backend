@@ -29,7 +29,6 @@ SECRET_KEY = os.getenv("SECRET_KEY", "django-insecure-ir8*tzr*o!cqe@h)a35pht8($4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["92.63.105.199", "devinse.store"]
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
