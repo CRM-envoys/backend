@@ -49,13 +49,13 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/ya_crm_backend:latest
 
-      - name: push nginx to Docker Hub
-        uses: docker/build-push-action@v4
-        with:
-          context: ./infra
-          file: ./infra/Dockerfile
-          push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/nginx-am:latest
+      # - name: push nginx to Docker Hub
+        # uses: docker/build-push-action@v4
+        # with:
+          # context: ./infra
+          # file: ./infra/Dockerfile
+          # push: true
+          # tags: S !!!{{ secrets.DOCKER_USERNAME }}/nginx-am:latest
 
   deploy:
     if: github.ref == 'refs/heads/main'
